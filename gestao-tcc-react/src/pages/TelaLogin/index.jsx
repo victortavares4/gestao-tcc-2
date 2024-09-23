@@ -7,8 +7,10 @@ import Api from '../../services/api';
 import imgUnisc from '../../assets/images/imageUnisc.png';
 import logo from '../../assets/icons/image 3 (Traced).svg'
 import logoUnisc from '../../assets/icons/logoUnisc.svg'
+import { useAuth } from '../../hooks/auth';
 
 const TelaLogin = () => {
+  const { signIn } = useAuth();
   const styles = useStyles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -33,16 +35,12 @@ const TelaLogin = () => {
   const fazerLogin = async () => {
     setLoading(true);
     try {
-      const data = { login: usuario, senha: senha };
-      const response = await Api.post('user/login', data, {
-        headers: { 'Content-Type': 'application/json' }
+      var result = await signIn({
+        login: usuario,
+        senha: senha,
       });
-      const token = response.data.token;
-      if (token) {
-        localStorage.setItem('authToken', token);
-        navigate('/');
-      } else {
-        setError('Token não encontrado na resposta.');
+      if (result.data.response) {
+        history.push("/");
       }
     } catch (error) {
       setError('Login falhou. Por favor, verifique suas credenciais.');
@@ -63,7 +61,7 @@ const TelaLogin = () => {
         <Container maxWidth="xs">
           <Box style={{ padding: 20, color: "#000000" }}>
             <Box className={styles.boxIcon}>
-              <img src={logo} style={{height: 60}}/>
+              <img src={logo} style={{ height: 60 }} />
             </Box>
             <TextField
               placeholder='E-mail'
@@ -86,13 +84,13 @@ const TelaLogin = () => {
               onClick={fazerLogin}
               disabled={loading}
               fullWidth
-              style={{ marginTop: 16, background: "#0076D7",height:50, fontWeight: 800, color: "#fff" }}
+              style={{ marginTop: 16, background: "#0076D7", height: 50, fontWeight: 800, color: "#fff" }}
             >
               {loading ? <CircularProgress size={24} /> : 'Entrar'}
             </Button>
             {error && <Typography color="error" variant="body2">{error}</Typography>}
-            <Box className={styles.boxIcon} style={{marginTop:"3rem"}}>
-              <img src={logoUnisc} style={{height: 40}}/>
+            <Box className={styles.boxIcon} style={{ marginTop: "3rem" }}>
+              <img src={logoUnisc} style={{ height: 40 }} />
             </Box>
           </Box>
         </Container>
