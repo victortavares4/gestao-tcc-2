@@ -8,93 +8,83 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s;
     background-color: #234285;
     color: #FFFFFF;
+    transition: margin-left 0.4s ease-in-out, background-color 0.3s ease-in-out;
 
-    
-    &.show, &.hide{
-        transition: margin-left .2s ease-in;
-        -webkit-transition: margin-left .2s ease-in;
-    }
-
-    &.hide{
-        margin-left: -231px;
-    }
-
-    &.show{
-        margin-left: 0;
-    }
+    /* Removendo show/hide já que o sidebar está fixo */
 `;
 
 export const SidebarHeader = styled.div`
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     height: 70px;
     display: flex;
+    align-items: center;
 
-    div:first-child{
+    div:first-child {
         padding: 24px 32px 24px 30px;
         width: 81px;
         border-right: 1px solid rgba(255, 255, 255, 0.5);
         text-align: center;
         height: 70px;
 
-        svg{
+        svg {
             opacity: 0.5;
             cursor: pointer;
+            transition: opacity 0.3s ease;
 
-            &:hover{
+            &:hover {
                 opacity: 1;
             }
         }
     }
 
-    div:last-child{
+    div:last-child {
         padding: 14px 27px 14px 36px;
         width: 150px;
         height: 70px;
     }
-`
+`;
 
 export const SidebarBody = styled.div`
     padding-left: 0;
     padding-top: 5px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 86%;
+    height: calc(100vh - 140px); /* Ajusta o espaço restante */
 
-    ul{
+    ul {
         list-style-type: none;
         padding: 0;
+        margin: 0;
 
-        li{
+        li {
             width: 231px;
             height: 45px;
             cursor: pointer;
-            padding: 9px 0 9px 0;
+            padding: 9px 0;
             display: flex;
-            flex-direction: row;
             align-items: center;
-            
-            label{
+            transition: background-color 0.3s ease;
+
+            label {
                 cursor: pointer;
                 display: flex;
-                margin: 0 0 0 30px;
+                margin-left: 30px;
                 text-decoration: none;
                 text-align: left;
-                font-size: 14px/20px;
-                letter-spacing: 0px;
+                font-size: 14px;
                 color: #BDC7DA;
-                opacity: 1;
                 width: 100%;
+                transition: color 0.3s ease;
             }
 
-            &:hover{
+            &:hover {
                 background-color: #00B1EB;
-    
-                label{
-                    color: #FFFFFF!important;
-                    font-weight: bold!important;
+
+                label {
+                    color: #FFFFFF;
+                    font-weight: bold;
                 }
             }
         }
@@ -114,9 +104,16 @@ export const SidebarBody = styled.div`
         background-color: #ececf3;
         box-shadow: inset 0 0 6px rgba(255,255,255,0.5);
     }
-`
+`;
 
 export const SidebarFooter = styled.div`
     padding-left: 30px;
-    float: left;
-`
+    height: 70px;
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 86px;
+        height: 36px;
+    }
+`;

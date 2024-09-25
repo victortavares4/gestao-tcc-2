@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, SidebarContainer, MainContent } from './styles';
 import Sidebar from '../../components/SideBar';
+import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
     return (
@@ -9,7 +10,7 @@ const Layout = () => {
                 <Sidebar />
             </SidebarContainer>
             <MainContent>
-                <Outlet />  // Este componente renderizará os componentes das rotas filhas
+                <Outlet />
             </MainContent>
         </Container>
     );

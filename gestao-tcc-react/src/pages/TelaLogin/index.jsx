@@ -40,7 +40,7 @@ const TelaLogin = () => {
         senha: senha,
       });
       if (result.data.response) {
-        history.push("/");
+        navigate("/");
       }
     } catch (error) {
       setError('Login falhou. Por favor, verifique suas credenciais.');

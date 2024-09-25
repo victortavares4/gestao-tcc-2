@@ -6,25 +6,24 @@ import Authorized from '../pages/Layouts';
 const Route = ({ isPrivate = false, component: Component, allowedRoles, ...rest }) => {
     const { user, userRoles } = useAuth();
 
-    if (isPrivate && !user) {
+    if (isPrivate && user) {
         return <Navigate to="/login" />;
     }
 
-    let roles = [];
-    if (userRoles) {
-        roles = Array.isArray(userRoles) ? userRoles : [userRoles];
+    if (isPrivate && allowedRoles && !allowedRoles.some(role => userRoles?.includes(role))) {
+        return <Navigate to="/unauthorized" />;
     }
 
-    const Layout = user && roles.length > 0 ? Authorized : Authorized;
+    const Layout = Authorized;
 
     return (
         <ReactDOMRoute
             {...rest}
-            render={({ location }) => (
+            element={
                 <Layout>
                     <Component />
                 </Layout>
-            )}
+            }
         />
     );
 };
