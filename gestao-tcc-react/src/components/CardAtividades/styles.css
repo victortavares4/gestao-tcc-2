@@ -1,7 +1,27 @@
 .update-card{
     background-color: white;
-    height: 300px;
     border-radius: 12px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.37);
+}
+.update-header{
+display: flex;
+justify-content: space-between;
+
+}
+
+.update-content{
     padding: 20px;
+
+}
+.person-info{
+    display: flex;
+}
+
+.person-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 200px;
+    margin-right: 20px;
+    
 }

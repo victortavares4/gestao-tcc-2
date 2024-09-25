@@ -5,7 +5,7 @@ import { Container } from "@material-ui/core";
 const Dashboard = () => {
   const document = {
     'id': 1,
-    'type': 'TCC',
+    'type': 'Trabalho de Conclusão',
     'student': {
       'id': 1, 'name': 'John Doe', 'registration': '12345','photo': 'https://www.designi.com.br/images/preview/12161376.jpg'
     },
@@ -40,9 +40,9 @@ const Dashboard = () => {
     ],
     'lastSubmission': '2024-09-24',
     'deadline': '2024-10-10',
-    'description': 'This is a thesis about AI',
-    'title': 'Artificial Intelligence in Healthcare',
-    'status': 'approved',
+    'description': 'Implementar um sistema que sugira produtos aos usuários com base em suas interações anteriores, utilizando técnicas de aprendizado de máquina e processamento de dados.',
+    'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
+    'status': 'pending',
     'committee': {
       'id': 1,
       'student': {
