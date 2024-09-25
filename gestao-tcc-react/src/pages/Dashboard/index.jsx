@@ -1,13 +1,11 @@
 import React from "react";
 import CardAtividades from "../../components/CardAtividades";
-import { Container } from "@material-ui/core";
-
 const Dashboard = () => {
   const document = {
     'id': 1,
     'type': 'Trabalho de Conclusão',
     'student': {
-      'id': 1, 'name': 'John Doe', 'registration': '12345','photo': 'https://www.designi.com.br/images/preview/12161376.jpg'
+      'id': 1, 'name': 'John Doe', 'registration': '12345', 'photo': 'https://www.designi.com.br/images/preview/12161376.jpg'
     },
     'grades': [10, 9.5],
     'professor': {
@@ -56,13 +54,17 @@ const Dashboard = () => {
       },
     },
   };
-
   return (
     <div className="dashboard">
       <h1>Dashboard</h1>
-      <CardAtividades data={document} />
-      <CardAtividades data={document} />
-      <CardAtividades data={document} />
+      <div className="first-container">
+        <CardAtividades data={document} />
+        <CardAtividades data={document} />
+        <CardAtividades data={document} />
+      </div>
+      <div className="second-container">
+        <p>segundo container</p>
+      </div>
     </div>
   );
 };

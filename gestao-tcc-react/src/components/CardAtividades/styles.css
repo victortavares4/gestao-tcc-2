@@ -52,7 +52,21 @@ justify-content: space-between;
 }
 
 .update-footer{
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
+
+    button{
+        background-color: #2B4266;
+        border-radius: 12px;
+        color: #fff;
+        border-width: 0;
+        padding: 5px 20px;
+        stroke-width: 0px;
+        font-weight: 600;
+    }
+    button:hover{
+        background-color: #19345f;
+    }
 }
 
