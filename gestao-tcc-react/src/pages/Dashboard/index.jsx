@@ -61,6 +61,8 @@ const Dashboard = () => {
     <div className="dashboard">
       <h1>Dashboard</h1>
       <CardAtividades data={document} />
+      <CardAtividades data={document} />
+      <CardAtividades data={document} />
     </div>
   );
 };
