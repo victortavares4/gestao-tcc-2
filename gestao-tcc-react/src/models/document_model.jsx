@@ -1,11 +1,11 @@
 class DocumentModel {
-    constructor(id, type, student, grades, professor, history, meetings, lastSubmission, deadline, description, title, status, committee) {
+    constructor(id, type, student, grades, professor, historic, meetings, lastSubmission, deadline, description, title, status, committee) {
       this.id = id; // Document ID
       this.type = type; // Document type (e.g., thesis, dissertation, etc.)
       this.student = student; // Student object
       this.grades = grades; // Array of grades
       this.professor = professor; // Professor object
-      this.history = history; // Comment object (revision/comment history)
+      this.historic = historic; // Comment object (revision/comment history)
       this.meetings = meetings; // Array of Meeting objects
       this.lastSubmission = lastSubmission; // Date of the last document submission
       this.deadline = deadline; // Deadline for submission

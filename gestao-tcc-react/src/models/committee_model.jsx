@@ -7,3 +7,5 @@ export class CommitteeModel {
         this.document = document;
     }
 }
+
+export default CommitteeModel;
