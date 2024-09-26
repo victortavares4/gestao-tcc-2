@@ -8,7 +8,7 @@ const ToastContainer = ({ messages }) => {
         from: { right: '-120%', opacity: 0 },
         enter: { right: '0%', opacity: 1 },
         leave: { right: '-120%', opacity: 0 },
-        keys: message => message.id, // Definindo a chave para identificar cada item
+        keys: message => message.id,
     });
 
     return (

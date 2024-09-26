@@ -11,8 +11,6 @@ export const Container = styled.div`
     background-color: #234285;
     color: #FFFFFF;
     transition: margin-left 0.4s ease-in-out, background-color 0.3s ease-in-out;
-
-    /* Removendo show/hide já que o sidebar está fixo */
 `;
 
 export const SidebarHeader = styled.div`
@@ -24,7 +22,6 @@ export const SidebarHeader = styled.div`
     div:first-child {
         padding: 24px 32px 24px 30px;
         width: 81px;
-        border-right: 1px solid rgba(255, 255, 255, 0.5);
         text-align: center;
         height: 70px;
 
@@ -41,7 +38,7 @@ export const SidebarHeader = styled.div`
 
     div:last-child {
         padding: 14px 27px 14px 36px;
-        width: 150px;
+        width: 100%;
         height: 70px;
     }
 `;
@@ -51,7 +48,7 @@ export const SidebarBody = styled.div`
     padding-top: 5px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: calc(100vh - 140px); /* Ajusta o espaço restante */
+    height: calc(100vh - 140px); 
 
     ul {
         list-style-type: none;
