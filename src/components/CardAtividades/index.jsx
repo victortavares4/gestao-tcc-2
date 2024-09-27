@@ -1,6 +1,9 @@
 import React from "react";
 import './styles.css';
 export function CardAtividades(document){
+
+  
+
   return (
     <div className="update-card">
       <div className="update-header" >
