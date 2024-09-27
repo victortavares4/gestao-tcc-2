@@ -7,8 +7,13 @@ import { AppHelpers } from "../../utils/helpers";
 export function CardAtividades(document) {
 
   const navigate = useNavigate();
-  const { description, color } = AppHelpers.getStatusDetails(document.data.status);
 
+  const { description, color } = AppHelpers.getStatusDetails(document.data.status);
+  const handleNavigate = () => {
+    const objectToPass = document;
+
+    navigate('/document', { state: objectToPass }); 
+  };
 
 
   return (
@@ -37,8 +42,8 @@ export function CardAtividades(document) {
         </div>
         <div className="update-footer">
           <button onClick={event => {
-            navigate('document')
-          }} className="history-button">Ver Histórico</button>
+                navigate('/document')
+            }} className="history-button">Ver Histórico</button>
           <div className="last-update">
             <span>última atualização: {document.data.lastSubmission}</span>
           </div>

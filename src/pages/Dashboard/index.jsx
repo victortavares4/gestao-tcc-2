@@ -11,7 +11,7 @@ const Dashboard = () => {
     'professor': {
       'id': 1, 'name': 'Dr. Smith', 'type': 'Advisor', 'registration': '67890', 'photo': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROYIxfO0el9_f17_msy47K6rpofzEQfA8Dvg&s', 'students': []
     },
-    'historic': [
+    'comments': [
       {
         "id": 1,
         "user": "John Doe",

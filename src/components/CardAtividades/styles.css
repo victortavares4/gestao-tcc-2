@@ -24,7 +24,6 @@ border-radius: 12px 12px 12px 0px;
     .document-status{
         display: flex;
         border-radius: 0px 12px 0px 12px;
-        background-color: orange;
         color: #fff;
         padding: 0px 20px;
         font-size: 16px;
@@ -53,7 +52,7 @@ border-radius: 12px 12px 12px 0px;
     margin: 20px 0px;
 
 }
-.person-info img {
+.person-photo {
     width: 60px;
     height: 60px;
     object-fit: cover;
