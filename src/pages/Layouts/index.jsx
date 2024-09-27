@@ -19,7 +19,7 @@ const Authorized = ({ children }) => {
     return (
         <Container>
 
-            <div style={{ display: 'flex' }}>
+            <div style={{ height: "100vh", display: 'flex', overflow:'hidden' }}>
                 <Sidebar /> 
 
                 <div className="main-body" style={{ flex: 1, padding: '20px' }}>

@@ -7,7 +7,6 @@ import { useState } from "react";
 import './styles.css';
 import {  Comment, EventNote, Event,ArrowBack} from '@mui/icons-material';
 
-
 const Document = () => {
     const navigate = useNavigate();
     const document = {
