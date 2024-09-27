@@ -1,6 +1,7 @@
 import { Group, Home, InsertChart, ShowChart } from '@mui/icons-material';
 import Dashboard from '../pages/Dashboard';
 import TelaLogin from './../pages/TelaLogin/index';
+import Document from '../pages/Document';
 
 const ROLE_ADMIN = "RoleAdmin";
 
@@ -39,6 +40,8 @@ const RoutesList = [
         allowedRoles: [ROLE_ADMIN],
         icon: Group,
     },
+    
+
 ];
 
 export default RoutesList;
