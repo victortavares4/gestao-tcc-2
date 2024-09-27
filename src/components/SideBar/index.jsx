@@ -18,11 +18,6 @@ const Sidebar = () => {
 
     return (
         <Container>
-            <SidebarHeader>
-                <div>
-                    <img src={logo} width="100" height="36" alt="Logo Unisc" />
-                </div>
-            </SidebarHeader>
             <SidebarBody>
                 <ul>
                     {sidebarMenuItems.map((item) => {

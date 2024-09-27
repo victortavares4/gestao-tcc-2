@@ -17,28 +17,14 @@ const Authorized = ({ children }) => {
     }, [user]);
 
     return (
-        <Container>            
-            <header className="main-header">
-                <ul>
-                    <li className="li-logo">
-                        <Link to="/" title="Home">
-                            <img src={logo} width="100" height="36" alt="Logo" />
-                        </Link>
-                    </li>
-                    <li className="li-notification">
-                        <FiBell size={20} />
-                    </li>                    
-                </ul>
-            </header>
+        <Container>
 
             <div style={{ display: 'flex' }}>
-                {/* Sidebar ocupa uma coluna à esquerda */}
                 <Sidebar /> 
 
-                {/* Conteúdo principal do layout */}
                 <div className="main-body" style={{ flex: 1, padding: '20px' }}>
                     <main role="main">
-                        {children} {/* Aqui é onde o Dashboard ou qualquer componente será renderizado */}
+                        {children}
                     </main>
                 </div>
             </div>
