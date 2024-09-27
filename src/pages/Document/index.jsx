@@ -5,13 +5,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import './styles.css';
+import {  Comment, EventNote, Event,ArrowBack} from '@mui/icons-material';
 
 
 const Document = () => {
     const navigate = useNavigate();
     const document = {
         'id': 1,
-        'type': 'Trabalho de Conclusão',
+        'type': 'Proposta',
         'student': {
             'id': 1, 'name': 'John Doe', 'registration': '12345', 'photo': 'https://www.designi.com.br/images/preview/12161376.jpg'
         },
@@ -60,16 +61,16 @@ const Document = () => {
         "meetings": [
             {
                 "id": 1,
-                "dateTime": "2024-09-15T10:00:00",
+                "dateTime": "09/09/2024, 10:30:00",
                 "description": "Initial review meeting."
             },
             {
                 "id": 2,
-                "dateTime": "2024-09-22T14:30:00",
+                "dateTime": "04/09/2024, 09:00:00",
                 "description": "Follow-up meeting with corrections."
             }
         ],
-        'lastSubmission': '2024-09-24',
+        'lastSubmission': '24/09/2024',
         'deadline': '2024-10-10',
         'description': 'Implementar um sistema que sugira produtos aos usuários com base em suas interações anteriores, utilizando técnicas de aprendizado de máquina e processamento de dados.',
         'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
@@ -105,12 +106,13 @@ const Document = () => {
     };
     return (
         <><div className="document">
-            <button onClick={event => {
-                navigate('/');
-            }}>voltar</button>
+        
             <div className="first-container">
                 <div className="document-card">
                     <div className="document-header">
+                    <button onClick={event => {
+                navigate('/');
+            }}><ArrowBack/> Voltar</button>
                         <p className="document-type">{document.type}</p>
                         <p className="document-status" style={{ backgroundColor: color }}>
                             {description}
@@ -134,15 +136,22 @@ const Document = () => {
                             <div className="file-button-container">
                                 <button>Arquivo.pdf</button>
                                 <div className="last-update">
-                                    <span>última atualização: {document.lastSubmission}</span>
+                                    <p>Última Atualização: {document.lastSubmission}</p>
+                                    <div className="advisor-container">
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {/* {Fazer a verificação se o usuário é o Orientador Aluno ou Coordenador | Apenas o Orientador pode ver os botões: de marcar como concluído e aprovar proposta} */}
+
+                            <button>Aprovar Proposta</button>
+                            <button>Marcar como concluído</button>
                         <div className="divider"></div>
                         <div className="comments-and-meetings-container">
                             <div className="comments-container">
                                 <div>
-                                    <h3>Comentários</h3>
+                               <div className="comments-header"> <Comment /><h3>Comentários</h3></div>
                                     <div className="group-comments">
                                         <div class='comment'>
                                             {document.comments.map((comment) => (
@@ -163,14 +172,16 @@ const Document = () => {
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)} />
                                         <button className="chat-send-button" onClick={handleSendMessage}>
-                                            Enviar
+                                            Comentar
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div className="meetings-container">
                                 <div>
-                                    <h3>Histórico de Reuniões</h3>
+                              <div className="calendar-header">
+                             <EventNote/> <h3>Histórico de Reuniões</h3>
+                              </div>
                                     <div className="group-meetings">
                                         <div class='meeting'>
                                             {document.meetings.map((meeting) => (
@@ -182,13 +193,23 @@ const Document = () => {
 
                                     </div>
                                 </div>
-                                <div className="chat-container">
+                                <div className="chat-container" >
+                                <div className="chat-input-wrapper">
+                                    <input
+                                            type="text"
+                                            
+                                            className="chat-input"
+                                            
+                                            placeholder="Digite uma observação"
+                                        />
+                                    </div>
                                     <div className="chat-input-wrapper">
+                                        
                                         <input
                                             type="text"
-                                            className="date-input"
+                                            className="chat-input"
                                             value={selectedDate ? selectedDate.toLocaleString() : ''}
-                                            placeholder="Selecione data e horário"
+                                            placeholder="04/09/2024, 00:00:00"
                                             readOnly
                                         />
                                         <DatePicker
@@ -197,10 +218,10 @@ const Document = () => {
                                             showTimeSelect
                                             dateFormat="Pp"
                                             placeholderText="Clique para escolher a data"
-                                            customInput={<button className="open-calendar-button">Calendário</button>} />
+                                            customInput={<button className="open-calendar-button"><Event className="event-icon"/></button>} />
                                     </div>
                                     <button className="chat-send-button" onClick={handleSendMessage}>
-                                            Confirmar
+                                            Registrar
                                         </button>
                                 </div>
                             </div>

@@ -15,6 +15,11 @@
     .document-type {
         font-size: 16px;
     }
+    button{
+        background-color: #fff;
+        border-radius: 24px;
+        padding: 4px 10px;
+    }
 
     p {
         margin-bottom: 0px;
@@ -94,6 +99,11 @@
     gap: 20px;
 }
 
+.comments-header{
+    display: flex;
+    gap: 10px;
+    color: #0076D7;
+}
 .comments-container{
     margin-bottom: 20px;
     width: 50vw;
@@ -165,10 +175,17 @@
   .chat-send-button:hover {
     background-color: #0056b3;
   }
+
+
+  .calendar-header{
+    display: flex;
+    gap: 10px;
+    color: #0076D7;
+}
   .open-calendar-button {
     border: none;
     margin-left: 10px;
-    background-color: #007bff;
+    background-color: #2B4266;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -176,4 +193,8 @@
   
   .open-calendar-button:hover {
     background-color: #0056b3;
+  }
+
+  .event{
+    color: #0076D7;
   }

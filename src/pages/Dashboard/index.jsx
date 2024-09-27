@@ -1,5 +1,7 @@
 import React from "react";
 import CardAtividades from "../../components/CardAtividades";
+import { Diversity1Outlined } from "@mui/icons-material";
+import './styles';
 const Dashboard = () => {
   const document = {
     'id': 1,
@@ -56,14 +58,18 @@ const Dashboard = () => {
   };
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
+      <div className="header">
+      <img src={document.professor.photo} alt={document.professor.name} className="person-photo" />
+      <p>{document.professor.name}</p>
+      <h2>Últimas atualizações</h2>
+      </div>
+    
       <div className="first-container">
         <CardAtividades data={document} />
         <CardAtividades data={document} />
         <CardAtividades data={document} />
       </div>
       <div className="second-container">
-        <p>segundo container</p>
       </div>
     </div>
   );
