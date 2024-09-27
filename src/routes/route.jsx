@@ -1,12 +1,12 @@
 import React from 'react';
-import { Route as ReactDOMRoute, Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 import Authorized from '../pages/Layouts';
 
-const Route = ({ isPrivate = false, component: Component, allowedRoles, ...rest }) => {
+const Route = ({ isPrivate = false, allowedRoles, ...rest }) => {
     const { user, userRoles } = useAuth();
 
-    if (isPrivate && user) {
+    if (isPrivate && !user) {
         return <Navigate to="/login" />;
     }
 
@@ -14,17 +14,11 @@ const Route = ({ isPrivate = false, component: Component, allowedRoles, ...rest 
         return <Navigate to="/unauthorized" />;
     }
 
-    const Layout = Authorized;
-
+    // Renderiza o layout autorizado e utiliza o Outlet para carregar rotas aninhadas
     return (
-        <ReactDOMRoute
-            {...rest}
-            element={
-                <Layout>
-                    <Component />
-                </Layout>
-            }
-        />
+        <Authorized>
+            <Outlet />  {/* Isso garante que o conteúdo da rota seja renderizado */}
+        </Authorized>
     );
 };
 

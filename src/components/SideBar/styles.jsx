@@ -8,7 +8,7 @@ export const Container = styled.div`
     top: 0;
     left: 0;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    background-color: #234285;
+    background-color: #0076D7;
     color: #FFFFFF;
     transition: margin-left 0.4s ease-in-out, background-color 0.3s ease-in-out;
 `;
@@ -71,16 +71,15 @@ export const SidebarBody = styled.div`
                 text-decoration: none;
                 text-align: left;
                 font-size: 14px;
-                color: #BDC7DA;
                 width: 100%;
                 transition: color 0.3s ease;
             }
 
             &:hover {
-                background-color: #00B1EB;
+                background-color: #0c5f7a;
 
                 label {
-                    color: #FFFFFF;
+                    color: #5aa3bb;
                     font-weight: bold;
                 }
             }

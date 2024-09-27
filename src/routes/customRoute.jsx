@@ -1,22 +1,25 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/auth'; // Para obter o estado de autenticação do usuário
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
+import Authorized from '../pages/Layouts';
 
-const CustomRoute = ({ isPrivate = false, component: Component, allowedRoles = [], ...rest }) => {
-    const { user, userRoles } = useAuth(); // Pegue o usuário e seus papéis (roles)
+const CustomRoute = ({ isPrivate = false, allowedRoles, ...rest }) => {
+    const { user, userRoles } = useAuth();
 
-    // Se a rota for privada e o usuário não estiver logado, redireciona para a página de login
-    if (isPrivate && !user) {
+    if (isPrivate && user) {
         return <Navigate to="/login" />;
     }
 
-    // Se a rota for privada e os papéis do usuário não estão nos papéis permitidos, redireciona para "Não Autorizado"
-    if (isPrivate && allowedRoles.length > 0 && !allowedRoles.some(role => userRoles.includes(role))) {
+    if (isPrivate && allowedRoles && !allowedRoles.some(role => userRoles?.includes(role))) {
         return <Navigate to="/unauthorized" />;
     }
 
-    // Se tudo estiver OK, renderiza o componente passado
-    return <Component {...rest} />;
+    // Renderiza o layout autorizado com o Outlet para exibir o conteúdo da rota
+    return (
+        <Authorized>
+            <Outlet />  
+        </Authorized>
+    );
 };
 
 export default CustomRoute;

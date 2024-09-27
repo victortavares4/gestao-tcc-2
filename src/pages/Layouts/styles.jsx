@@ -2,11 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   header.main-header{
-    height: 70px;
-    background-color: #102A63;
-    box-shadow: 0px 3px 20px #0000000D;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-
     ul{
       list-style-type: none;
       padding: 0;

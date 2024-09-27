@@ -1,24 +1,18 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import RoutesList from './routeList';
+import CustomRoute from './customRoute';
+import Dashboard from './../pages/Dashboard/index';
 import TelaLogin from '../pages/TelaLogin';
-import Layout from '../pages/Layout';
 
 const AppRoutes = () => (
     <Routes>
-        {/* As rotas que usam o Layout (com Sidebar fixo) */}
-        <Route element={<Layout />}> 
-            {RoutesList.map(route => (
-                <Route
-                    key={route.path}
-                    path={route.path}
-                    element={<route.component />} // Renderizando o componente correto
-                />
-            ))}
-        </Route>
-
-        {/* Outras rotas que não precisam do Layout podem ir aqui */}
         <Route path="/login" element={<TelaLogin />} />
+        
+        <Route path="/" element={<CustomRoute isPrivate={true}  />}>
+            <Route index element={<Dashboard />} />  {/* Renderiza o Dashboard como rota padrão */}
+        </Route>
+        
+        {/* Outras rotas podem ser adicionadas aqui */}
     </Routes>
 );
 

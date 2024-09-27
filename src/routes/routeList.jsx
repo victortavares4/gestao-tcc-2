@@ -1,7 +1,7 @@
+import { Group, Home, InsertChart, ShowChart } from '@mui/icons-material';
 import Dashboard from '../pages/Dashboard';
 import TelaLogin from './../pages/TelaLogin/index';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../hooks/auth';
+
 const ROLE_ADMIN = "RoleAdmin";
 
 const RoutesList = [
@@ -10,29 +10,35 @@ const RoutesList = [
         label: "LogIn",
         component: TelaLogin,
         isPrivate: false, 
+        showInSidebar: false
     },
     {
         path: "/",
-        label: "DashBoard",
+        label: "Dashboard",
         showInSidebar: true,
         component: Dashboard,
         isPrivate: false,
-        allowedRoles: [ROLE_ADMIN]
+        allowedRoles: [ROLE_ADMIN],
+        icon: InsertChart,
+    },
+    {
+        path: "/notas",
+        label: "Notas",
+        showInSidebar: true,
+        component: Dashboard,
+        isPrivate: false,
+        allowedRoles: [ROLE_ADMIN],
+        icon: ShowChart,
+    },
+    {
+        path: "/users",
+        label: "Usuários",
+        showInSidebar: true,
+        component: Dashboard,
+        isPrivate: false,
+        allowedRoles: [ROLE_ADMIN],
+        icon: Group,
     },
 ];
-
-export const PrivateRoute = ({ children, allowedRoles }) => {
-    const { userRoles, user } = useAuth(); 
-
-    if (user) {
-        return <Navigate to="/login" />;
-    }
-
-    if (allowedRoles && !allowedRoles.some(role => userRoles?.includes(role))) {
-        return <Navigate to="/unauthorized" />;
-    }
-
-    return children;
-};
 
 export default RoutesList;

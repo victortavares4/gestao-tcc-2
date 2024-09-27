@@ -1,19 +1,10 @@
 import React from 'react';
-import { Container, SidebarContainer, MainContent } from './styles';
-import Sidebar from '../../components/SideBar';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom'; 
 
-const Layout = () => {
-    return (
-        <Container>
-            <SidebarContainer>
-                <Sidebar />
-            </SidebarContainer>
-            <MainContent>
-                <Outlet />
-            </MainContent>
-        </Container>
-    );
-};
+const Layout = () => (
+    <main>
+        <Outlet /> {/* Renderiza os componentes das rotas filhas */}
+    </main>
+);
 
 export default Layout;

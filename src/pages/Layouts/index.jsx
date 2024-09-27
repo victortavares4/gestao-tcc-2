@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiBell, FiChevronDown } from 'react-icons/fi';
-import { BiLogOut } from 'react-icons/bi';
+import { FiBell } from 'react-icons/fi';
 import { useAuth } from '../../hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { Container } from './styles';
-import Dropdown from 'react-bootstrap/Dropdown';
 import logo from '../../assets/images/imageUnisc.png';
 import Sidebar from '../../components/SideBar';
 
@@ -27,51 +25,22 @@ const Authorized = ({ children }) => {
                             <img src={logo} width="100" height="36" alt="Logo" />
                         </Link>
                     </li>
-
                     <li className="li-notification">
                         <FiBell size={20} />
-                    </li>
-
-                    <li className="li-profile">
-                        <Dropdown className="col-md-12 user-name">
-                            <Dropdown.Toggle>
-                                <span>Olá, {userObject ? userObject.firstName : ""}</span>
-                                <FiChevronDown size={20} />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <div className="label-line">
-                                    <div className="hrdivider">
-                                        <hr />
-                                        <span className="profile-label">Perfil</span>
-                                    </div>
-                                </div>
-                                <div className="label-name">
-                                    <div className="profile-info">
-                                        <p>Nome: <span>{userObject ? userObject.firstName : ""}</span></p>
-                                        <p>E-mail: <span>{userObject ? userObject.email : ""}</span></p>
-                                    </div>
-                                </div>
-                                <div className="label-line">
-                                    <div className="hrdivider options">
-                                        <hr />
-                                        <span className="profile-label">Opções</span>
-                                    </div>
-                                </div>
-                                <div className="label-name">
-                                    <Dropdown.Item onClick={() => signOut()} ><BiLogOut /> Sair</Dropdown.Item>
-                                </div>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </li>
+                    </li>                    
                 </ul>
             </header>
 
-            <Sidebar /> {/* Sidebar sempre fixo à esquerda */}
+            <div style={{ display: 'flex' }}>
+                {/* Sidebar ocupa uma coluna à esquerda */}
+                <Sidebar /> 
 
-            <div className="main-body">
-                <main role="main">
-                    {children} {/* Conteúdo principal renderizado aqui */}
-                </main>
+                {/* Conteúdo principal do layout */}
+                <div className="main-body" style={{ flex: 1, padding: '20px' }}>
+                    <main role="main">
+                        {children} {/* Aqui é onde o Dashboard ou qualquer componente será renderizado */}
+                    </main>
+                </div>
             </div>
         </Container>
     );
