@@ -1,0 +1,72 @@
+.update-card{
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.171);
+    margin-bottom: 10px;
+}
+.update-header{
+height: 40px;
+display: flex;
+justify-content: space-between;
+
+
+    .document-type{
+        font-size: 16px;
+        padding: 20px 20px;
+    }
+    .document-status{
+        display: flex;
+        border-radius: 0px 12px 0px 12px;
+        background-color: orange;
+        color: #fff;
+        font-size: 16px;
+        padding: 20px 20px;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+
+.update-content{
+    padding: 20px;
+
+}
+.person-info{
+    display: flex;
+}
+.divider {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.349);
+    margin: 20px 0px;
+
+}
+.person-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 200px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    
+}
+
+.update-footer{
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    button{
+        background-color: #2B4266;
+        border-radius: 12px;
+        color: #fff;
+        border-width: 0;
+        padding: 5px 20px;
+        stroke-width: 0px;
+        font-weight: 600;
+    }
+    button:hover{
+        background-color: #19345f;
+    }
+}
+

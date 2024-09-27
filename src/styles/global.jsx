@@ -1,6 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+    /* Importando a fonte Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
     .toast{
         opacity: 1!important;
         box-shadow: none!important;
@@ -74,7 +77,6 @@ export default createGlobalStyle`
         z-index: 999 !important;
     }
 
-
     #react-select-3-listbox {
         z-index: 999;
     }
@@ -82,6 +84,7 @@ export default createGlobalStyle`
     .text-right {
         text-align: right !important;
     }
+
     body{
         margin-left: 0px !important;
         background-color: #F6F8FA;
@@ -95,7 +98,7 @@ export default createGlobalStyle`
     }
 
     * {
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
 
     html {
