@@ -41,6 +41,15 @@ const RoutesList = [
         allowedRoles: [ROLE_ADMIN],
         icon: Group,
     },
+    {
+        path: "/document",
+        label: "Documentos",
+        showInSidebar: false,
+        component: Document,
+        isPrivate: false,
+        allowedRoles: [ROLE_ADMIN],
+        icon: Group,
+    },
     
 
 ];

@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useState } from "react";
 import './styles.css';
-import {  Comment, EventNote, Event,ArrowBack} from '@mui/icons-material';
+import { Comment, EventNote, Event, ArrowBack } from '@mui/icons-material';
 
 const Document = () => {
     const navigate = useNavigate();
@@ -104,14 +104,14 @@ const Document = () => {
         }
     };
     return (
-        <><div className="document">
-        
+        <div className="document">
+
             <div className="first-container">
                 <div className="document-card">
                     <div className="document-header">
-                    <button onClick={event => {
-                navigate('/');
-            }}><ArrowBack/> Voltar</button>
+                        <button onClick={event => {
+                            navigate('/');
+                        }}><ArrowBack /> Voltar</button>
                         <p className="document-type">{document.type}</p>
                         <p className="document-status" style={{ backgroundColor: color }}>
                             {description}
@@ -137,20 +137,20 @@ const Document = () => {
                                 <div className="last-update">
                                     <p>Última Atualização: {document.lastSubmission}</p>
                                     <div className="advisor-container">
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {/* {Fazer a verificação se o usuário é o Orientador Aluno ou Coordenador | Apenas o Orientador pode ver os botões: de marcar como concluído e aprovar proposta} */}
 
-                            <button>Aprovar Proposta</button>
-                            <button>Marcar como concluído</button>
+                        <button>Aprovar Proposta</button>
+                        <button>Marcar como concluído</button>
                         <div className="divider"></div>
                         <div className="comments-and-meetings-container">
                             <div className="comments-container">
                                 <div>
-                               <div className="comments-header"> <Comment /><h3>Comentários</h3></div>
+                                    <div className="comments-header"> <Comment /><h3>Comentários</h3></div>
                                     <div className="group-comments">
                                         <div class='comment'>
                                             {document.comments.map((comment) => (
@@ -178,9 +178,9 @@ const Document = () => {
                             </div>
                             <div className="meetings-container">
                                 <div>
-                              <div className="calendar-header">
-                             <EventNote/> <h3>Histórico de Reuniões</h3>
-                              </div>
+                                    <div className="calendar-header">
+                                        <EventNote /> <h3>Histórico de Reuniões</h3>
+                                    </div>
                                     <div className="group-meetings">
                                         <div class='meeting'>
                                             {document.meetings.map((meeting) => (
@@ -193,17 +193,17 @@ const Document = () => {
                                     </div>
                                 </div>
                                 <div className="chat-container" >
-                                <div className="chat-input-wrapper">
-                                    <input
+                                    <div className="chat-input-wrapper">
+                                        <input
                                             type="text"
-                                            
+
                                             className="chat-input"
-                                            
+
                                             placeholder="Digite uma observação"
                                         />
                                     </div>
                                     <div className="chat-input-wrapper">
-                                        
+
                                         <input
                                             type="text"
                                             className="chat-input"
@@ -217,11 +217,11 @@ const Document = () => {
                                             showTimeSelect
                                             dateFormat="Pp"
                                             placeholderText="Clique para escolher a data"
-                                            customInput={<button className="open-calendar-button"><Event className="event-icon"/></button>} />
+                                            customInput={<button className="open-calendar-button"><Event className="event-icon" /></button>} />
                                     </div>
                                     <button className="chat-send-button" onClick={handleSendMessage}>
-                                            Registrar
-                                        </button>
+                                        Registrar
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -229,8 +229,7 @@ const Document = () => {
 
                 </div>
             </div>
-        </div><div className="second-container">
-            </div></>
+        </div>
 
     );
 };

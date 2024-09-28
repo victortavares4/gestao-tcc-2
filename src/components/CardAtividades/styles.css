@@ -33,7 +33,59 @@ border-radius: 12px 12px 12px 0px;
     }
 }
 
+.banca-list {
+    margin-top: 10px;
+  }
+  
+  .committee-member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .committee-member img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .add-button, .remove-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .remove-button {
+    background-color: #e54f4f;
+  }
+  
+  .banca-list .remove-button {
+    background-color: #e54f4f;
+  }
+  
 
+  .add-button, .remove-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .remove-button {
+    background-color: #e54f4f;
+  }
+  
+  .banca-list .remove-button {
+    background-color: #e54f4f;
+  }
+  
 
 .update-content{
     padding: 20px;

@@ -16,7 +16,9 @@ const AppRoutes = () => (
         <Route path="/users" element={<CustomRoute isPrivate={true}  />}>
             <Route index element={<Usuarios />} />
         </Route>
-        <Route path="/document" element={<Document />} />
+        <Route path="/document" element={<CustomRoute isPrivate={true}  />}>
+            <Route index element={<Document />} />
+        </Route>
         
     </Routes>
 );
