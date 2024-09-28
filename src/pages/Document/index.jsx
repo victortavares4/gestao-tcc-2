@@ -89,7 +89,6 @@ const Document = () => {
     };
 
 
-
     const { description, color } = AppHelpers.getStatusDetails(document.status);
     const [message, setMessage] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -100,12 +99,11 @@ const Document = () => {
     const handleSendMessage = () => {
         if (message.trim()) {
             console.log('Mensagem enviada:', message);
-            setMessage(''); // Limpa o campo após o envio
+            setMessage('');
         }
     };
     return (
         <div className="document">
-
             <div className="first-container">
                 <div className="document-card">
                     <div className="document-header">
@@ -142,8 +140,6 @@ const Document = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* {Fazer a verificação se o usuário é o Orientador Aluno ou Coordenador | Apenas o Orientador pode ver os botões: de marcar como concluído e aprovar proposta} */}
-
                         <button>Aprovar Proposta</button>
                         <button>Marcar como concluído</button>
                         <div className="divider"></div>
@@ -196,9 +192,7 @@ const Document = () => {
                                     <div className="chat-input-wrapper">
                                         <input
                                             type="text"
-
                                             className="chat-input"
-
                                             placeholder="Digite uma observação"
                                         />
                                     </div>
@@ -226,11 +220,9 @@ const Document = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
     );
 };
 

@@ -246,6 +246,7 @@ header.main-header{
 
   .main-body{
     margin-bottom: 90px;
+    width: 50%;
   }
 
   footer{
