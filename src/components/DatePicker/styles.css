@@ -1,0 +1,28 @@
+.datetime-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .date-input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+  }
+  
+  .open-calendar-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .open-calendar-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,5 +1,7 @@
 import React from "react";
 import CardAtividades from "../../components/CardAtividades";
+import { Diversity1Outlined } from "@mui/icons-material";
+import './styles.css';
 const Dashboard = () => {
   const document = {
     'id': 1,
@@ -11,7 +13,7 @@ const Dashboard = () => {
     'professor': {
       'id': 1, 'name': 'Dr. Smith', 'type': 'Advisor', 'registration': '67890', 'photo': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROYIxfO0el9_f17_msy47K6rpofzEQfA8Dvg&s', 'students': []
     },
-    'historic': [
+    'comments': [
       {
         "id": 1,
         "user": "John Doe",
@@ -56,14 +58,20 @@ const Dashboard = () => {
   };
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
+      <div className="header-container">
+      <h2>Últimas atualizações</h2>
+      <div className="advisor-container">
+      <img src={document.professor.photo} alt={document.professor.name} className="person-photo" />
+      <span>{document.professor.name}</span>
+      </div>
+      </div>
+      <div className="divider"></div>
       <div className="first-container">
         <CardAtividades data={document} />
         <CardAtividades data={document} />
         <CardAtividades data={document} />
       </div>
       <div className="second-container">
-        <p>segundo container</p>
       </div>
     </div>
   );

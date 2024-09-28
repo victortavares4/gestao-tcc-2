@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  header.main-header{
+header.main-header{
     ul{
       list-style-type: none;
       padding: 0;

@@ -1,3 +1,19 @@
 .dashboard{
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.header-container{
     display: flex;
+    justify-content: space-between;
+    margin-right: 40px;
+    align-items: center;
+}
+.advisor-contaer{
+    display: flex;
+}
+.divider {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.349);
+    margin: 20px 0px;
 }

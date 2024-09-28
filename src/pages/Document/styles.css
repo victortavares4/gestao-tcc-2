@@ -1,0 +1,200 @@
+.document-card {
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.171);
+    margin-bottom: 10px;
+
+}
+
+.document-header {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+
+    .document-type {
+        font-size: 16px;
+    }
+    button{
+        background-color: #fff;
+        border-radius: 24px;
+        padding: 4px 10px;
+    }
+
+    p {
+        margin-bottom: 0px;
+        margin-left: 10px;
+        color: #fff;
+    }
+
+    .document-status {
+        display: flex;
+        color: #fff;
+        padding: 0px 20px;
+        font-size: 16px;
+        align-items: center;
+        height: 40px;
+        justify-content: center;
+    }
+}
+
+
+
+.document-content {
+    padding: 20px;
+
+    h3 {
+        color: #0076D7;
+    }
+
+
+}
+
+.document-person-info {
+    display: flex;
+    justify-content: space-between;
+
+    .file-button-container {
+
+        button {
+            background-color: #0076D7;
+            border-radius: 12px;
+            color: #fff;
+            border-width: 0;
+            padding: 10px 20px;
+            stroke-width: 0px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #19345f;
+        }
+    }
+}
+
+.first-container-person-info {
+    display: flex;
+}
+
+.divider {
+    height: 1px;
+    background-color: rgba(128, 128, 128, 0.349);
+    margin: 20px 0px;
+}
+
+.document-person-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 200px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+}
+
+.comments-and-meetings-container{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.comments-header{
+    display: flex;
+    gap: 10px;
+    color: #0076D7;
+}
+.comments-container{
+    margin-bottom: 20px;
+    width: 50vw;
+
+}
+
+.group-comments{
+    height: 20vh;
+    overflow-y: scroll;
+}
+.comment {
+    p{
+        margin-bottom: 0px;
+    }
+}
+
+.meetings-container{
+    margin-bottom: 20px;
+    width: 50vw;
+
+}
+
+.group-meetings{
+    height: 20vh;
+    overflow-y: scroll;
+}
+.meeting {
+    p{
+        margin-bottom: 0px;
+    }
+}
+
+.chat-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: start;
+    height: 24px;
+  }
+  
+  .chat-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chat-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 30px;
+  }
+  
+  .chat-send-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .chat-send-button:hover {
+    background-color: #0056b3;
+  }
+
+
+  .calendar-header{
+    display: flex;
+    gap: 10px;
+    color: #0076D7;
+}
+  .open-calendar-button {
+    border: none;
+    margin-left: 10px;
+    background-color: #2B4266;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .open-calendar-button:hover {
+    background-color: #0056b3;
+  }
+
+  .event{
+    color: #0076D7;
+  }

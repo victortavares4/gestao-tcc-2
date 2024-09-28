@@ -4,6 +4,7 @@ import CustomRoute from './customRoute';
 import Dashboard from './../pages/Dashboard/index';
 import TelaLogin from '../pages/TelaLogin';
 import Usuarios from './../pages/Usuarios/index';
+import Document from '../pages/Document';
 
 const AppRoutes = () => (
     <Routes>
@@ -15,6 +16,7 @@ const AppRoutes = () => (
         <Route path="/users" element={<CustomRoute isPrivate={true}  />}>
             <Route index element={<Usuarios />} />
         </Route>
+        <Route path="/document" element={<Document />} />
         
     </Routes>
 );
