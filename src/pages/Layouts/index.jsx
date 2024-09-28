@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from './styles';
 import logo from '../../assets/images/imageUnisc.png';
 import Sidebar from '../../components/SideBar';
+import Projetos from '../../components/Projetos';
 
 const Authorized = ({ children }) => {
     const { signOut, user } = useAuth();
@@ -27,6 +28,7 @@ const Authorized = ({ children }) => {
                         {children}
                     </main>
                 </div>
+                <Projetos />
             </div>
         </Container>
     );

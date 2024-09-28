@@ -14,7 +14,6 @@ const CustomRoute = ({ isPrivate = false, allowedRoles, ...rest }) => {
         return <Navigate to="/unauthorized" />;
     }
 
-    // Renderiza o layout autorizado com o Outlet para exibir o conteúdo da rota
     return (
         <Authorized>
             <Outlet />  
