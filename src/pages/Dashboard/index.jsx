@@ -17,6 +17,7 @@ const documents = [
     'status': 'pending',
     'lastSubmission': '2024-09-24',
     'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
+    'submissionDeadline': '10/10/2024'
   },
   {
     'id': 2,
@@ -31,6 +32,7 @@ const documents = [
     'status': 'pending',
     'lastSubmission': '2024-08-26',
     'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
+    'submissionDeadline': '10/10/2024'
   },
   {
     'id': 3,
@@ -45,6 +47,7 @@ const documents = [
     'status': 'completed',
     'lastSubmission': '2024-09-15',
     'title': 'Desenvolvimento de um Sistema de Recomendação Personalizado para E-commerce',
+    'submissionDeadline': '10/10/2024'
   }
 ];
 
@@ -54,7 +57,7 @@ const Dashboard = ({ role }) => {
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileError, setFileError] = useState(''); 
-
+  const storedUserRole = localStorage.getItem('userRole');
   const firstProfessor = documents.length > 0 ? documents[0].professor : null;
 
   const handleOpenDialog = () => setOpenDialog(true);
@@ -89,7 +92,7 @@ const Dashboard = ({ role }) => {
       <div className="header-container">
         <h2>Últimas atualizações</h2>
         <div className="advisor-container">
-          {firstProfessor && (
+          {firstProfessor && storedUserRole === "aluno" && (
             <>
               <img src={firstProfessor.photo} alt={firstProfessor.name} className="person-photo" />
               <span>{firstProfessor.name}</span>

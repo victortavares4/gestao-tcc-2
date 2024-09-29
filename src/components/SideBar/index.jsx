@@ -16,6 +16,12 @@ const Sidebar = () => {
         return RoutesList.filter(item => item.showInSidebar);
     }, [userRoles]);
 
+    const handleLogout = () => {
+        localStorage.clear();
+        
+        navigate('/login');
+      };
+
     return (
         <Container>
             <SidebarBody>
@@ -41,9 +47,9 @@ const Sidebar = () => {
                 </ul>
             </SidebarBody>
             <SidebarFooter>
-                <Box style={{ width: "75%", color: "#fff", background: "#2B4266", borderRadius: 12, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Box style={{ width: "75%", color: "#fff", background: "#2B4266", borderRadius: 12, marginTop:"10rem", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <Logout />
-                    <Button style={{ color: "#fff" }}>Sair</Button>
+                    <Button style={{ color: "#fff" }} onClick={handleLogout}>Sair</Button>
                 </Box>
             </SidebarFooter>
         </Container>
