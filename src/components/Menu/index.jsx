@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
-
-//Icon
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 
 const MenuItem = ({ item, setActive }) => {

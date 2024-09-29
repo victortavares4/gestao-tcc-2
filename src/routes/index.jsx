@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import CustomRoute from './customRoute';
 import Dashboard from './../pages/Dashboard/index';
 import TelaLogin from '../pages/TelaLogin';
+import Usuarios from './../pages/Usuarios/index';
 import Document from '../pages/Document';
 import Notas from '../pages/Notas';
 
@@ -11,12 +12,14 @@ const AppRoutes = () => (
         <Route path="/login" element={<TelaLogin />} />
         
         <Route path="/" element={<CustomRoute isPrivate={true}  />}>
-            <Route index element={<Dashboard />} />  {/* Renderiza o Dashboard como rota padrão */}
+            <Route index element={<Dashboard />} />
+        </Route>
+        <Route path="/users" element={<CustomRoute isPrivate={true}  />}>
+            <Route index element={<Usuarios />} />
         </Route>
         <Route path="/document" element={<Document />} />
         <Route path="/notas" element={<Notas />} />
         
-        {/* Outras rotas podem ser adicionadas aqui */}
     </Routes>
 );
 

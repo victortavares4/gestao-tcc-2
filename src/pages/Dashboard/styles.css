@@ -17,3 +17,17 @@
     background-color: rgba(128, 128, 128, 0.349);
     margin: 20px 0px;
 }
+.no-documents {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .no-documents p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .no-documents button {
+    margin-top: 10px;
+  }
+  

@@ -14,10 +14,9 @@ const Route = ({ isPrivate = false, allowedRoles, ...rest }) => {
         return <Navigate to="/unauthorized" />;
     }
 
-    // Renderiza o layout autorizado e utiliza o Outlet para carregar rotas aninhadas
     return (
         <Authorized>
-            <Outlet />  {/* Isso garante que o conteúdo da rota seja renderizado */}
+            <Outlet />
         </Authorized>
     );
 };

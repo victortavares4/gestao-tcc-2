@@ -3,6 +3,8 @@ import Dashboard from '../pages/Dashboard';
 import TelaLogin from './../pages/TelaLogin/index';
 import Document from '../pages/Documento';
 import Notas from '../pages/Notas';
+import Usuarios from '../pages/Usuarios';
+
 const ROLE_ADMIN = "RoleAdmin";
 
 const RoutesList = [
@@ -35,7 +37,16 @@ const RoutesList = [
         path: "/users",
         label: "Usuários",
         showInSidebar: true,
-        component: Dashboard,
+        component: Usuarios,
+        isPrivate: false,
+        allowedRoles: [ROLE_ADMIN],
+        icon: Group,
+    },
+    {
+        path: "/document",
+        label: "Documentos",
+        showInSidebar: false,
+        component: Document,
         isPrivate: false,
         allowedRoles: [ROLE_ADMIN],
         icon: Group,
