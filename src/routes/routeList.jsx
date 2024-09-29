@@ -1,8 +1,8 @@
 import { Group, Home, InsertChart, ShowChart } from '@mui/icons-material';
 import Dashboard from '../pages/Dashboard';
 import TelaLogin from './../pages/TelaLogin/index';
-import Document from '../pages/Document';
-
+import Document from '../pages/Documento';
+import Notas from '../pages/Notas';
 const ROLE_ADMIN = "RoleAdmin";
 
 const RoutesList = [
@@ -26,7 +26,7 @@ const RoutesList = [
         path: "/notas",
         label: "Notas",
         showInSidebar: true,
-        component: Dashboard,
+        component: Notas,
         isPrivate: false,
         allowedRoles: [ROLE_ADMIN],
         icon: ShowChart,

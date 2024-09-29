@@ -4,6 +4,7 @@ import CustomRoute from './customRoute';
 import Dashboard from './../pages/Dashboard/index';
 import TelaLogin from '../pages/TelaLogin';
 import Document from '../pages/Document';
+import Notas from '../pages/Notas';
 
 const AppRoutes = () => (
     <Routes>
@@ -13,6 +14,7 @@ const AppRoutes = () => (
             <Route index element={<Dashboard />} />  {/* Renderiza o Dashboard como rota padrão */}
         </Route>
         <Route path="/document" element={<Document />} />
+        <Route path="/notas" element={<Notas />} />
         
         {/* Outras rotas podem ser adicionadas aqui */}
     </Routes>
