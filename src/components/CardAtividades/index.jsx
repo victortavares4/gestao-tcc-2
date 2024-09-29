@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './styles.css';
 import { useNavigate } from "react-router-dom";
 import { AppHelpers } from "../../utils/helpers";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material';
 
 const professoresData = [
   { id: 1, nome: 'Kurt Molz', tipo: 'Professor', photo: require('../../assets/images/kurt.jpg') },
@@ -12,7 +12,7 @@ const professoresData = [
 
 export function CardAtividades({ data }) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState(''); 
+  const [dialogType, setDialogType] = useState('');
   const [banca, setBanca] = useState([]);
   const [availableProfessores, setAvailableProfessores] = useState(professoresData);
 
@@ -24,12 +24,12 @@ export function CardAtividades({ data }) {
 
   const handleOpenDialog = (type) => {
     setDialogType(type);
-    setOpenDialog(true); 
+    setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setDialogType(''); 
+    setDialogType('');
   };
 
   const handleAddProfessor = (professor) => {
@@ -81,9 +81,21 @@ export function CardAtividades({ data }) {
 
       {dialogType === 'avaliar' && (
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="avaliar-dialog">
-          <DialogTitle id="avaliar-dialog">AVALIAR PROPOSTA</DialogTitle>
+          <DialogTitle id="avaliar-dialog" >AVALIAR TRABALHO DE CONCLUSÃO </DialogTitle>
+        {/* ESSA DEVERÁ SER A NOTA DA BANCA */}
+
           <DialogContent>
-            <p>Você deseja aceitar a proposta de Trabalho de Conclusão?</p>
+          <p>Insira a nota dos professores:</p>
+          {professoresData.map((e) => {
+            return <TextField
+            type="number"
+            fullWidth
+              style={{ marginTop: '1rem', marginBottom: '1rem', }}
+              variant="outlined"
+              placeholder={'Insira a nota do(a): ' + e.nome}
+
+            />
+          })}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} className="cancel-button">Cancelar</Button>
