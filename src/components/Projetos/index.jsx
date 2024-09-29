@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Card, CardContent, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useStyles } from './styles';
+import Api from '../../services/api';
 
 const Projetos = () => {
   const classes = useStyles();
-
-  const projects = [
-    { title: 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce' },
-    { title: 'Aplicação de Algoritmos de Visão Computacional para Diagnóstico Médico Automatizado'},
-  ];
-
+  const [projects, setProjects] = useState([]); 
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    Api.get('/todosProjetos')
+      .then((response) => response.json())
+      .then((data) => {
+        setProjects(data);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar projetos:', error);
+      });
+  }, []); 
 
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <Container className={classes.container} maxWidth={'300px'} style={{width:300}}>
+    <Container className={classes.container} maxWidth={'300px'} style={{ width: 300 }}>
       <span className={classes.projeto}>Projetos</span>
       <TextField
         fullWidth
@@ -42,7 +49,7 @@ const Projetos = () => {
             <label className={classes.projectTitle}>
               {project.title}
             </label>
-          </CardContent>          
+          </CardContent>
         </Card>
       ))}
     </Container>

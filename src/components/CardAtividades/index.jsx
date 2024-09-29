@@ -3,6 +3,8 @@ import './styles.css';
 import { useNavigate } from "react-router-dom";
 import { AppHelpers } from "../../utils/helpers";
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
+import Api from "../../services/api";
+import { error_message, success_message } from "../Toast";
 
 const professoresData = [
   { id: 1, nome: 'Kurt Molz', tipo: 'Professor', photo: require('../../assets/images/kurt.jpg') },
@@ -12,7 +14,7 @@ const professoresData = [
 
 export function CardAtividades({ data }) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogType, setDialogType] = useState(''); 
+  const [dialogType, setDialogType] = useState('');
   const [banca, setBanca] = useState([]);
   const [availableProfessores, setAvailableProfessores] = useState(professoresData);
 
@@ -24,12 +26,12 @@ export function CardAtividades({ data }) {
 
   const handleOpenDialog = (type) => {
     setDialogType(type);
-    setOpenDialog(true); 
+    setOpenDialog(true);
   };
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setDialogType(''); 
+    setDialogType('');
   };
 
   const handleAddProfessor = (professor) => {
@@ -40,6 +42,17 @@ export function CardAtividades({ data }) {
   const handleRemoveProfessor = (professor) => {
     setBanca((prevBanca) => prevBanca.filter((p) => p.id !== professor.id));
     setAvailableProfessores((prevProfessores) => [...prevProfessores, professor]);
+  };
+
+  const handleConfirmBanca = () => {
+    const selectedProfessors = banca.map(prof => prof.id);
+
+    Api.post(`/criarBanca?id=${data.id}`, selectedProfessors).then(response => response.json())
+      .then(result => {
+        success_message('Banca criada com sucesso:', result);
+        handleCloseDialog();
+      })
+      .catch(error => error_message('Error creating committee:', error));
   };
 
   return (
@@ -53,6 +66,8 @@ export function CardAtividades({ data }) {
       <div className="update-content">
         <h3>{data?.title || 'Título não disponível'}</h3>
         <p>Descrição: {data?.description || 'Descrição não disponível'}</p>
+        {/* Adicionando a data de prazo de envio em vermelho */}
+        <p style={{ color: 'red' }}>Prazo de envio dos documentos: {data?.submissionDeadline || '10/10/2024'}</p>
         <div className="divider"></div>
         <div className="person-info">
           <div>
@@ -67,17 +82,16 @@ export function CardAtividades({ data }) {
         <div className="update-footer">
           <button onClick={() => navigate('/document')} className="history-button">Ver Histórico</button>
           <button onClick={() => handleOpenDialog('avaliar')} className="history-button">Avaliar</button>
+          {data?.status === 'completed' && (
+            <button onClick={() => handleOpenDialog('banca')} style={{ background: "#0076D7" }}>
+              Montar Banca
+            </button>
+          )}
           <div className="last-update">
             <span>última atualização: {data?.lastSubmission || 'Não disponível'}</span>
           </div>
         </div>
       </div>
-
-      {data?.status === 'completed' && (
-        <button onClick={() => handleOpenDialog('banca')} className="montar-banca-button">
-          Montar Banca
-        </button>
-      )}
 
       {dialogType === 'avaliar' && (
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="avaliar-dialog">
@@ -87,12 +101,26 @@ export function CardAtividades({ data }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} className="cancel-button">Cancelar</Button>
-            <Button onClick={handleCloseDialog} className="confirm-button">Confirmar</Button>
+            <Button
+              onClick={() => {
+                Api.post(`/updateProposta?id=${data.id}`)
+                  .then(response => response.json())
+                  .then(result => {
+                    success_message('Proposta avaliada com sucesso:');
+                    handleCloseDialog();
+                  })
+                  .catch(error => {
+                    error_message('Erro ao avaliar proposta:', error);
+                  });
+              }}
+              className="confirm-button"
+            >
+              Confirmar
+            </Button>
           </DialogActions>
         </Dialog>
       )}
 
-      {/* Montar Banca Dialog */}
       {dialogType === 'banca' && (
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="montar-banca-dialog">
           <DialogTitle id="montar-banca-dialog">Criação de Banca de Avaliação</DialogTitle>
@@ -127,7 +155,7 @@ export function CardAtividades({ data }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} className="cancel-button">Cancelar</Button>
-            <Button onClick={handleCloseDialog} className="confirm-button">Confirmar</Button>
+            <Button onClick={handleConfirmBanca} className="confirm-button">Confirmar</Button>
           </DialogActions>
         </Dialog>
       )}

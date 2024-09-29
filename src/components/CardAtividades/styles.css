@@ -33,6 +33,10 @@ border-radius: 12px 12px 12px 0px;
     }
 }
 
+.montar-banca-button{
+    background: #0076D7;
+}
+
 .banca-list {
     margin-top: 10px;
   }
