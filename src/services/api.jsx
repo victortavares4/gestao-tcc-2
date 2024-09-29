@@ -4,7 +4,7 @@ import { error_message } from '../components/Toast/index.jsx';
 
 const Api = axios.create({
     // Local
-    baseURL: 'https://localhost:5050',
+    baseURL: 'http://localhost:8080/api',
 });
 
 export const exceptionNotificationAPI = (error) => {

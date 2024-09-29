@@ -17,20 +17,18 @@ export const AuthProvider = ({ children }) => {
         return {};
     });
 
-    const signIn = async ({ rec, nome, password, email }) => {
+    const signIn = async ({ login, senha }) => {
         try {
             const log = {
-                recaptcha: rec,
-                email: email,
-                nome: nome,
-                password: password
+                login: login,
+                senha: senha,
             }
 
-            const result = await api.post('/signInNew', log);
+            const result = await api.post('/user/login', log);
 
-            const { accessToken, user } = result.data.response;
+            const { accessToken, user } = result.data.token;
             setSignInDataOnLocalStorage(result, false);
-            localStorage.setItem('@Tcc:userName', nome);
+            localStorage.setItem('@Tcc:userName', login);
             setData({ token: accessToken, user });
             return result;
         } catch (error) {

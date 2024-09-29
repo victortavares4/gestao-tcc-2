@@ -8,6 +8,7 @@ import imgUnisc from '../../assets/images/imageUnisc.png';
 import logo from '../../assets/icons/image 3 (Traced).svg'
 import logoUnisc from '../../assets/icons/logoUnisc.svg'
 import { useAuth } from '../../hooks/auth';
+import { success_message } from '../../components/Toast';
 
 const TelaLogin = () => {
   const { signIn } = useAuth();
@@ -39,7 +40,8 @@ const TelaLogin = () => {
         login: usuario,
         senha: senha,
       });
-      if (result.data.response) {
+      if (result.data) {
+        success_message("Seja Bem Vindo!")
         navigate("/");
       }
     } catch (error) {
