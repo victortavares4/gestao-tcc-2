@@ -10,6 +10,7 @@ height: 40px;
 display: flex;
 justify-content: space-between;
 align-items: center;
+background-color: #333333;
 border-radius: 12px 12px 12px 0px;
 
     .document-type{

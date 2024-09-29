@@ -60,9 +60,9 @@ const Usuarios = () => {
     : professores.filter(prof => prof.nome.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
-    <Container className={classes.container} maxWidth="sm">
+    <Container className={classes.container} maxWidth="lg">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span className={classes.header}>Professores</span>
+        <span className={classes.header}>Usuários</span>
         <div className={classes.noProfessorContainer}>
           {confirmedProfessor ? (
             <div className={classes.confirmedProfessor}>

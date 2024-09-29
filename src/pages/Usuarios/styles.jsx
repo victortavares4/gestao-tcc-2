@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 export const useStyles = makeStyles({
   container: {
     padding: '30px 10px',
-    background: '#f5f5f5',
+    background: '#F6F8FA',
+    borderRadius:' 12px',
   },
   header: {
     color: '#2B4266',
@@ -25,8 +26,8 @@ export const useStyles = makeStyles({
     boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
   },
   avatar: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     marginRight: '15px',
   },
   professorInfo: {
