@@ -1,13 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package br.com.gestaotcc.gestaotcc.resources.service.api.projeto;
 
-/**
- *
- * @author Nicolas
- */
+import java.util.List;
+
 public class ProjetoServicoEjb {
+
+    public void create(ProjetoDto projetoDto) throws Exception {
+        try {
+            ProjetoDaoJpa dao = new ProjetoDaoJpa(); 
+            dao.create(projetoDto);
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     
+    public List<ProjetoDto> getAll() throws Exception {
+        try {
+            ProjetoDaoJpa dao = new ProjetoDaoJpa();
+            return dao.getAll();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

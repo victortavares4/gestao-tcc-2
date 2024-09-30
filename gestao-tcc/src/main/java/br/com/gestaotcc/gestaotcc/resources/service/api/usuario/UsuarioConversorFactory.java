@@ -5,11 +5,12 @@
 package br.com.gestaotcc.gestaotcc.resources.service.api.usuario;
 
 import java.util.function.Function;
-
 /**
  *
  * @author Nicolas
  */
+        import lombok.Builder;
+@Builder
 public class UsuarioConversorFactory {
 
     public static Function<Object[], UsuarioDtoConsultaFront> criarConversorDtoUsuarrio() {

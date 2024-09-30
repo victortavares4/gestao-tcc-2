@@ -4,6 +4,7 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.projeto;
 
+import java.sql.Date;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,13 +14,16 @@ import lombok.Data;
  */
 @Builder
 public class ProjetoDto {
+
     private Integer id_projeto;
     private Integer id_aluno;
     private Integer id_orientador;
+    private String alunoNome;
+    private String orientadorNome;
     private String nome;
     private String descricao;
-    private Data data_inicio;
-    private Data data_fim;
+    private Date data_inicio;
+    private Date data_fim;
 
     public Integer getId_projeto() {
         return id_projeto;
@@ -61,21 +65,36 @@ public class ProjetoDto {
         this.descricao = descricao;
     }
 
-    public Data getData_inicio() {
+    public Date getData_inicio() {
         return data_inicio;
     }
 
-    public void setData_inicio(Data data_inicio) {
+    public void setData_inicio(Date data_inicio) {
         this.data_inicio = data_inicio;
     }
 
-    public Data getData_fim() {
+    public Date getData_fim() {
         return data_fim;
     }
 
-    public void setData_fim(Data data_fim) {
+    public void setData_fim(Date data_fim) {
         this.data_fim = data_fim;
     }
-    
-    
+
+    public String getAlunoNome() {
+        return alunoNome;
+    }
+
+    public void setAlunoNome(String alunoNome) {
+        this.alunoNome = alunoNome;
+    }
+
+    public String getOrientadorNome() {
+        return orientadorNome;
+    }
+
+    public void setOrientadorNome(String orientadorNome) {
+        this.orientadorNome = orientadorNome;
+    }
+
 }
