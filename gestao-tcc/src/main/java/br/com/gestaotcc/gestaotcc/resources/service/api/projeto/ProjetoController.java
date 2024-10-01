@@ -49,4 +49,33 @@ public class ProjetoController {
                     .entity(new StandardResponse(e.getMessage())).build();
         }
     }
+    
+    
+    @POST
+    @Path("/comentario")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response setComenterio(ProjetoDto projetoDto) {
+        try {
+            ProjetoServicoEjb servico = new ProjetoServicoEjb();
+            servico.create(projetoDto);
+            return Response.ok(new StandardResponse("Projeto cadastrado com sucesso")).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new StandardResponse(e.getMessage())).build();
+        }
+    }
+    
+
+    
+    
+    
+    
+    //comentario 
+    //reunião
+    
+    // apresentação tcc 
+    
+    
+    // documento
 }

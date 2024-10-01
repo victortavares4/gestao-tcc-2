@@ -4,6 +4,8 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.usuario;
 
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginDto;
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginRetornoFrontDto;
 import br.com.gestaotcc.gestaotcc.utils.StandardResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -86,12 +88,20 @@ public class UsuarioController {
 //    "login": "login_do_usuario",
 //    "senha": "senha_secreta"
 //    }
+//Retorno para o front
+//{
+//    "token": "token_secreto"
+//    "tipo_user": "aluno"
+//    "nome_user": "Teste da Silva"
+//    "id_user": 1
+//    "id_orientador": 1
+//    "nome_orientador": "Teste da Silva dorivaldo"
+//}
         try { 
             UsuarioServicoEjb servico = new UsuarioServicoEjb();
-            String token = servico.authenticate(loginDto);
-            Map<String, String> response = new HashMap<>();
-            response.put("token", token);
-            return Response.ok(response).build();
+            LoginRetornoFrontDto retorno = servico.authenticate(loginDto);
+            
+            return Response.ok(retorno).build();
         } catch (Exception e) {
             return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse(e.getMessage())).build();
         }

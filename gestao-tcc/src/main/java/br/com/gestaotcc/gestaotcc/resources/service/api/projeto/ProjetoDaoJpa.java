@@ -17,7 +17,7 @@ public class ProjetoDaoJpa {
     }
 
     public void create(ProjetoDto projetoDto) throws SQLException {
-        String sql = "INSERT INTO projeto (id_aluno, id_orientador, nome, descricao, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO projeto (id_aluno, id_orientador, nome, descricao, data_inicio) VALUES (?, ?, ?, ?, ?, now())";
 
         try (Connection connection = connectionDB.getConnection(); 
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

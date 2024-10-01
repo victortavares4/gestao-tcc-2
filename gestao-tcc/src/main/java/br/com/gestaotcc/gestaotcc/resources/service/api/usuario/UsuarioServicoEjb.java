@@ -4,6 +4,8 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.usuario;
 
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginDto;
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginRetornoFrontDto;
 import br.com.gestaotcc.gestaotcc.utils.Mapper;
 import br.com.gestaotcc.gestaotcc.utils.Token;
 import java.sql.SQLException;
@@ -26,15 +28,23 @@ public class UsuarioServicoEjb {
         }
     }
 
-    public String authenticate(LoginDto loginDto) {
+    public LoginRetornoFrontDto authenticate(LoginDto loginDto) {
         try {
             UsuarioDaoJpa dao = new UsuarioDaoJpa();
-            Object[] retorno = dao.authenticate(loginDto);
+            UsuarioConversorFactory usuarioFactory = new UsuarioConversorFactory();
+            Mapper map = new Mapper();
             
+            LoginRetornoFrontDto retorno =  map.
+                    comFunction(usuarioFactory.criarConversorDtoUsuarrioAuthenticate(),
+                            dao.authenticate(loginDto));
+
             Token t = new Token();
-            String token = t.generateToken(retorno[1].toString());
-            t.storeToken((int) retorno[0], token);
-            return token;
+            String token = t.generateToken(retorno.getLogin());
+            t.storeToken(retorno.getId(), token);
+
+            retorno.setToken(token);
+
+            return retorno;
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioServicoEjb.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,24 +60,22 @@ public class UsuarioServicoEjb {
         UsuarioDaoJpa dao = new UsuarioDaoJpa();
         UsuarioConversorFactory usuarioFactory = new UsuarioConversorFactory();
         Mapper map = new Mapper();
-        
-        List<UsuarioDtoConsultaFront> teste = map.comFunction(usuarioFactory.criarConversorDtoUsuarrio() ,dao.findAll());
 
-         return teste;
+        List<UsuarioDtoConsultaFront> teste = map.comFunction(usuarioFactory.criarConversorDtoUsuarrio(), dao.findAll());
+
+        return teste;
     }
-    
+
     public List<UsuarioDtoConsultaFront> findAllTipo(String tipo) throws SQLException {
         UsuarioDaoJpa dao = new UsuarioDaoJpa();
         UsuarioConversorFactory usuarioFactory = new UsuarioConversorFactory();
         Mapper map = new Mapper();
-        
+
         List<UsuarioDtoConsultaFront> teste = map.
                 comFunction(usuarioFactory.criarConversorDtoUsuarrio(),
                         dao.findAllTipo(tipo));
 
-         return teste;
+        return teste;
     }
-
-  
 
 }
