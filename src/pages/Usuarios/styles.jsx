@@ -2,9 +2,10 @@ import { makeStyles } from '@material-ui/styles';
 
 export const useStyles = makeStyles({
   container: {
-    padding: '30px 10px',
     background: '#F6F8FA',
     borderRadius:' 12px',
+    margin:'0px',
+   
   },
   header: {
     color: '#2B4266',
