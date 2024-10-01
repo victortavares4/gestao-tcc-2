@@ -1,13 +1,14 @@
 package br.com.gestaotcc.gestaotcc.resources.service.api.projeto;
 
+import br.com.gestaotcc.gestaotcc.resources.service.api.documento.DocumentoDto;
 import java.util.List;
 
 public class ProjetoServicoEjb {
 
-    public void create(ProjetoDto projetoDto) throws Exception {
+    public void create(ProjetoDto projetoDto, DocumentoDto documentoDto) throws Exception {
         try {
-            ProjetoDaoJpa dao = new ProjetoDaoJpa(); 
-            dao.create(projetoDto);
+            ProjetoDaoJpa dao = new ProjetoDaoJpa();
+            dao.create(projetoDto, documentoDto);
         } catch (Exception e) {
             throw e;
         }

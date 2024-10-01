@@ -14,16 +14,16 @@ import javax.ws.rs.ext.Provider;
 public class WebConfig implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "http://localhost:3000");
+        responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
         responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
         responseContext.getHeaders().add("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, Authorization");
         responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
         responseContext.getHeaders().add("Access-Control-Expose-Headers", "Authorization");
 
         if (requestContext.getRequest().getMethod().equals("OPTIONS")) {
-            responseContext.setStatus(Response.Status.NO_CONTENT.getStatusCode()); 
+            responseContext.setStatus(Response.Status.NO_CONTENT.getStatusCode());
             responseContext.getHeaders().add("Content-Length", "0");
-            return; 
+            return;
         }
     }
 }
