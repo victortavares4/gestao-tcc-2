@@ -9,20 +9,27 @@ import { error_message, success_message } from "../Toast";
 const professoresData = [
   { id: 1, nome: 'Kurt Molz', tipo: 'Professor', photo: require('../../assets/images/kurt.jpg') },
   { id: 2, nome: 'Rejane Frozza', tipo: 'Professor', photo: require('../../assets/images/rejane.jpg') },
-  { id: 3, nome: 'Rafael Peiter', tipo: 'Professor', photo: require('../../assets/images/rafael.png') }
+  { id: 3, nome: 'Rafael Peiter', tipo: 'Professor', photo: require('../../assets/images/rafael.png') },
+  // outros professores...
 ];
 
 export function CardAtividades({ data }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogType, setDialogType] = useState('');
+  const [notaProposta, setNotaProposta] = useState(''); // Estado para a nota da proposta
   const [banca, setBanca] = useState([]);
   const [availableProfessores, setAvailableProfessores] = useState(professoresData);
 
   const navigate = useNavigate();
   const { description, color } = data ? AppHelpers.getStatusDetails(data.status) : { description: '', color: '' };
 
-  const student = data?.student || {};
-  const professor = data?.professor || {};
+  const getProfessorPhotoById = (id) => {
+    const professor = professoresData.find(p => p.id === id);
+    return professor ? professor.photo : 'https://via.placeholder.com/60';
+  };
+
+  const alunoPhoto = getProfessorPhotoById(data?.id_aluno);
+  const orientadorPhoto = getProfessorPhotoById(data?.id_orientador);
 
   const handleOpenDialog = (type) => {
     setDialogType(type);
@@ -52,31 +59,61 @@ export function CardAtividades({ data }) {
         success_message('Banca criada com sucesso:', result);
         handleCloseDialog();
       })
-      .catch(error => error_message('Error creating committee:', error));
+      .catch(error => error_message('Erro ao criar banca:', error));
+  };
+
+  const handleSubmitNotaProposta = () => {
+    Api.post(`/documento/avaliar/${data.id_documento}`, 
+      JSON.stringify({
+        idProjeto: data.id_documento,
+        notaProposta: parseFloat(notaProposta)
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        success_message('Proposta avaliada com sucesso');
+        handleCloseDialog();
+      })
+      .catch(error => {
+        error_message('Erro ao avaliar proposta:', error);
+      });
+  };
+
+  const handleRejeitarProposta = () => {
+    Api.post(`/documento/rejeitar/${data.id_documento}`)
+      .then(response => {
+        success_message('Proposta rejeitada. Reelaboração necessária.');
+        handleCloseDialog();
+      })
+      .catch(error => {
+        error_message('Erro ao rejeitar proposta:', error);
+      });
   };
 
   return (
     <div className="update-card">
       <div className="update-header">
-        <p className="document-type">{data?.type || 'Documento Desconhecido'}</p>
+        <p className="document-type">{data?.tipo_documento == 3 ? 'Trabalho de Conclusao' : 'Proposta'}</p>
         <p className="document-status" style={{ backgroundColor: color }}>
-          {description}
+          {data?.tipo_documento == 3 ? 'Em Andamento' : data?.tipo_documento == 4 ? 'Concluido' : 'Pendente'}
         </p>
       </div>
       <div className="update-content">
-        <h3>{data?.title || 'Título não disponível'}</h3>
-        <p>Descrição: {data?.description || 'Descrição não disponível'}</p>
-        {/* Adicionando a data de prazo de envio em vermelho */}
+        <h3>{data?.nome || 'Título não disponível'}</h3>
+        <p>Descrição: {data?.descricao || 'Descrição não disponível'}</p>
         <p style={{ color: 'red' }}>Prazo de envio dos documentos: {data?.submissionDeadline || '10/10/2024'}</p>
         <div className="divider"></div>
         <div className="person-info">
           <div>
-            <img src={student.photo || 'https://via.placeholder.com/60'} alt={student.name || 'Aluno'} className="person-photo" />
-            <img src={professor.photo || 'https://via.placeholder.com/60'} alt={professor.name || 'Professor'} className="person-photo" />
+            <img src={alunoPhoto} alt={data.alunoNome || 'Aluno'} className="person-photo" />
+            <img src={orientadorPhoto} alt={data.orientadorNome || 'Professor'} className="person-photo" />
           </div>
           <div>
-            <p>Aluno: {student.name || 'Aluno Desconhecido'}</p>
-            <p>Professor: {professor.name || 'Professor Desconhecido'}</p>
+            <p>Aluno: {data.alunoNome || 'Aluno Desconhecido'}</p>
+            <p>Professor: {data.orientadorNome || 'Professor Desconhecido'}</p>
           </div>
         </div>
         <div className="update-footer">
@@ -92,7 +129,6 @@ export function CardAtividades({ data }) {
           </div>
         </div>
       </div>
-
       {dialogType === 'avaliar' && (
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="avaliar-dialog">
           <DialogTitle id="avaliar-dialog" >AVALIAR TRABALHO DE CONCLUSÃO </DialogTitle>
@@ -113,21 +149,11 @@ export function CardAtividades({ data }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} className="cancel-button">Cancelar</Button>
-            <Button
-              onClick={() => {
-                Api.post(`/updateProposta?id=${data.id}`)
-                  .then(response => response.json())
-                  .then(result => {
-                    success_message('Proposta avaliada com sucesso:');
-                    handleCloseDialog();
-                  })
-                  .catch(error => {
-                    error_message('Erro ao avaliar proposta:', error);
-                  });
-              }}
-              className="confirm-button"
-            >
-              Confirmar
+            <Button onClick={handleRejeitarProposta} className="reject-button" style={{ backgroundColor: 'red', color: 'white' }}>
+              Rejeitar
+            </Button>
+            <Button onClick={handleSubmitNotaProposta} className="confirm-button">
+              Aceitar e Avaliar
             </Button>
           </DialogActions>
         </Dialog>
@@ -137,8 +163,8 @@ export function CardAtividades({ data }) {
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="montar-banca-dialog">
           <DialogTitle id="montar-banca-dialog">Criação de Banca de Avaliação</DialogTitle>
           <DialogContent>
-            <p><strong>Aluno:</strong> {student.name || 'Aluno Desconhecido'}</p>
-            <p><strong>Orientador:</strong> {professor.name || 'Professor Desconhecido'}</p>
+            <p><strong>Aluno:</strong> {data.alunoNome || 'Aluno Desconhecido'}</p>
+            <p><strong>Orientador:</strong> {data.orientadorNome || 'Professor Desconhecido'}</p>
             <h3>{data?.title || 'Título não disponível'}</h3>
             <p>{data?.description || 'Descrição não disponível'}</p>
             <h4>Banca</h4>

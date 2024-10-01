@@ -10,10 +10,9 @@ const Projetos = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    Api.get('/todosProjetos')
-      .then((response) => response.json())
+    Api.get('/projeto/todos')
       .then((data) => {
-        setProjects(data);
+        setProjects(data.data);
       })
       .catch((error) => {
         console.error('Erro ao buscar projetos:', error);
@@ -21,7 +20,7 @@ const Projetos = () => {
   }, []); 
 
   const filteredProjects = projects.filter(project =>
-    project.title.toLowerCase().includes(searchTerm.toLowerCase())
+    project.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -47,7 +46,7 @@ const Projetos = () => {
         <Card key={index} className={classes.projectCard}>
           <CardContent>
             <label className={classes.projectTitle}>
-              {project.title}
+              {project.nome}
             </label>
           </CardContent>
         </Card>

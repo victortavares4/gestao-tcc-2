@@ -7,9 +7,9 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
     const history = useNavigate();
     const [data, setData] = useState(() => {
-        const token = localStorage.getItem('@Tcc:token');
-        const user = localStorage.getItem('@Tcc:user');
-        const userRoles = localStorage.getItem('@Tcc:userRoles');
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        const userRoles = localStorage.getItem('userRoles');
         if (token && user) {
             api.defaults.headers.authorization = `Bearer ${token}`;
             return { token, user: user, userRoles: userRoles };
@@ -39,12 +39,11 @@ export const AuthProvider = ({ children }) => {
 
     const signOut = async (forceRedirect = false) => {
         sessionStorage.clear();
-        localStorage.removeItem('@Tcc:token');
-        localStorage.removeItem('@Tcc:user');
-        localStorage.removeItem('@Tcc:userRoles');
-        localStorage.removeItem('@Tcc:userName');
-        localStorage.removeItem('@Tcc:userID');
-        localStorage.removeItem('@Tcc:firstLogin');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userRoles');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('userID');
         setData({});
 
         if (forceRedirect) {
@@ -54,26 +53,23 @@ export const AuthProvider = ({ children }) => {
 
     const setSignInDataOnLocalStorage = (result) => {
         if (result.data.response) {
-            const token = result.data.response.accessToken;
+            const token = result.data.token;
             const user = result.data.response.user;
             const userRoles = result.data.response.userRoles;
             const userID = result.data.response.userID;
-            const firstLogin = result.data.response.primeiroLogin;
 
             sessionStorage.clear();
-            localStorage.removeItem('@Tcc:token');
-            localStorage.removeItem('@Tcc:user');
-            localStorage.removeItem('@Tcc:showContrato');
-            localStorage.removeItem('@Tcc:userRoles');
-            localStorage.removeItem('@Tcc:userName');
-            localStorage.removeItem('@Tcc:userID');
-            localStorage.removeItem('@Tcc:firstLogin');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            localStorage.removeItem('showContrato');
+            localStorage.removeItem('userRoles');
+            localStorage.removeItem('userName');
+            localStorage.removeItem(':userID');
 
-            localStorage.setItem('@Tcc:token', token);
-            localStorage.setItem('@Tcc:user', user);
-            localStorage.setItem('@Tcc:userID', userID);
-            localStorage.setItem('@Tcc:userRoles', userRoles);
-            localStorage.setItem('@Tcc:firstLogin', firstLogin);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', user);
+            localStorage.setItem('userID', userID);
+            localStorage.setItem('userRoles', userRoles);
             api.defaults.headers.authorization = `Bearer ${token}`;
             setData({ token, user, userRoles, userID });
 
