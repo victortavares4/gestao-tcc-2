@@ -5,13 +5,18 @@
 package br.com.gestaotcc.gestaotcc.resources.service.api.usuario;
 
 import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginDto;
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.login.LoginRetornoFrontDto;
 import br.com.gestaotcc.gestaotcc.utils.ConnectionDB;
+import br.com.gestaotcc.gestaotcc.utils.Mapper;
+import br.com.gestaotcc.gestaotcc.utils.Token;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,45 +42,32 @@ public class UsuarioDaoJpa {
         }
     }
 
-    public Object[] authenticate(LoginDto loginDto) throws SQLException {
-//        String sql = "SELECT id ,  FROM usuario WHERE matricula = ? AND senha = MD5(?)";
+   public Object[] authenticate(LoginDto loginDto) throws SQLException {
+    String sql = "SELECT u.id, u.matricula, u.nome, t.descricao as userType "
+               + "FROM usuario u JOIN tipo t ON u.tipo = t.id "
+               + "WHERE u.matricula = ? AND u.senha = MD5(?)";
 
-        String sql = "SELECT \n"
-                + "    u.id, \n"
-                + "    u.nome, \n"
-                + "    t.descricao AS tipo_usuario, \n"
-                + "    ao.id_orientador, \n"
-                + "    (SELECT u2.nome FROM usuario u2 WHERE u2.id = ao.id_orientador) AS nome_orientador\n"
-                + "FROM \n"
-                + "    usuario u\n"
-                + "JOIN \n"
-                + "    tipo t ON t.id = u.tipo\n"
-                + "JOIN \n"
-                + "    aluno_orientador ao ON ao.id_aluno = u.id\n"
-                + "WHERE \n"
-                + "    u.matricula = ? AND senha = MD5(?)";
+    try (Connection connection = connectionDB.getConnection();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        try ( Connection connection = connectionDB.getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, loginDto.getMatricula());
+        preparedStatement.setString(2, loginDto.getSenha());
 
-            preparedStatement.setString(1, loginDto.getLogin());
-            preparedStatement.setString(2, loginDto.getSenha());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Object[] retorno = new Object[4];
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            Object[] retorno = new Object[6];
-
-            if (resultSet.next()) {
-                retorno[0] = resultSet.getInt("id");
-                retorno[1] = loginDto.getLogin();
-                retorno[2] = resultSet.getString("nome");
-                retorno[3] = resultSet.getString("tipo_usuario");
-                retorno[4] = resultSet.getInt("id_orientador");
-                retorno[5] = resultSet.getString("nome_orientador");
-                return retorno;
-            } else {
-                throw new IllegalArgumentException("Login ou senha inválidos");
-            }
+        if (resultSet.next()) {
+            retorno[0] = resultSet.getInt("id");
+            retorno[1] = resultSet.getString("matricula");
+            retorno[2] = resultSet.getString("nome");
+            retorno[3] = resultSet.getString("userType");
+            return retorno;
+        } else {
+            throw new IllegalArgumentException("Login ou senha inválidos");
         }
     }
+}
+
 
     public List<Object[]> findAll() throws SQLException {
         String sql = "SELECT \n"

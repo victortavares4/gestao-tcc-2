@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("/user")
 public class UsuarioController {
-    
+
     @GET
     @Path("/findall")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -42,7 +42,7 @@ public class UsuarioController {
             return Response.status(Response.Status.BAD_REQUEST).entity(new StandardResponse(e.getMessage())).build();
         }
     }
-    
+
     @GET
     @Path("/findall/{tipo}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ public class UsuarioController {
             return Response.status(Response.Status.BAD_REQUEST).entity(new StandardResponse(e.getMessage())).build();
         }
     }
-    
+
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,42 +77,27 @@ public class UsuarioController {
             return Response.status(Response.Status.BAD_REQUEST).entity(new StandardResponse(e.getMessage())).build();
         }
     }
-    
+
     @POST
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginDto loginDto) {
-//  Json que devo receber do front
-//    {
-//    "login": "login_do_usuario",
-//    "senha": "senha_secreta"
-//    }
-//Retorno para o front
-//{
-//    "token": "token_secreto"
-//    "tipo_user": "aluno"
-//    "nome_user": "Teste da Silva"
-//    "id_user": 1
-//    "id_orientador": 1
-//    "nome_orientador": "Teste da Silva dorivaldo"
-//}
-        try { 
-            UsuarioServicoEjb servico = new UsuarioServicoEjb();
-            LoginRetornoFrontDto retorno = servico.authenticate(loginDto);
-            
-            return Response.ok(retorno).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse(e.getMessage())).build();
-        }
+@Path("/login")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public Response login(LoginDto loginDto) {
+    try {
+        UsuarioServicoEjb servico = new UsuarioServicoEjb();
+        LoginRetornoFrontDto loginRetorno = servico.authenticate(loginDto);
+        return Response.ok(loginRetorno).build();
+    } catch (Exception e) {
+        return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse(e.getMessage())).build();
     }
-    
+}
+
     @POST
     @Path("/verificar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response verificarUser(@Context HttpHeaders headers) {
-        
+
         String token = headers.getHeaderString("Authorization");
 
         if (token == null || token.isEmpty()) {
@@ -121,8 +106,8 @@ public class UsuarioController {
 
         try {
             UsuarioServicoEjb servico = new UsuarioServicoEjb();
-            if(servico.verificarToken(token)){
-               return Response.ok(new StandardResponse("Token valido")).build();
+            if (servico.verificarToken(token)) {
+                return Response.ok(new StandardResponse("Token valido")).build();
             } else {
                 return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse("Token Invalido")).build();
             }
