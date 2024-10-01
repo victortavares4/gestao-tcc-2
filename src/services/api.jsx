@@ -5,6 +5,9 @@ import { error_message } from '../components/Toast/index.jsx';
 const Api = axios.create({
     // Local
     baseURL: 'http://localhost:8080/api',
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    }
 });
 
 export const exceptionNotificationAPI = (error) => {

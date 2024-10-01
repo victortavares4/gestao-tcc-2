@@ -1,55 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardAtividades from "../../components/CardAtividades";
 import './styles.css';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material';
-
-const documents = [
-  {
-    'id': 1,
-    'type': 'Trabalho de Conclusão',
-    'student': {
-      'id': 1, 'name': 'John Doe', 'registration': '12345', 'photo': 'https://www.designi.com.br/images/preview/12161376.jpg'
-    },
-    'grades': [10, 9.5],
-    'professor': {
-      'id': 1, 'name': 'Dr. Smith', 'type': 'Advisor', 'registration': '67890', 'photo': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROYIxfO0el9_f17_msy47K6rpofzEQfA8Dvg&s', 'students': []
-    },
-    'status': 'pending',
-    'lastSubmission': '2024-09-24',
-    'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
-    'submissionDeadline': '10/10/2024'
-  },
-  {
-    'id': 2,
-    'type': 'Trabalho de Conclusão',
-    'student': {
-      'id': 2, 'name': 'Victor Hugo Tavares Brum', 'registration': '54321', 'photo': 'https://www.designi.com.br/images/preview/12161379.jpg'
-    },
-    'grades': [10, 9.5],
-    'professor': {
-      'id': 2, 'name': 'Kurt Molz', 'type': 'Advisor', 'registration': '98765', 'photo': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROYIxfO0el9_f17_msy47K6rpofzEQfA8Dvg&s', 'students': []
-    },
-    'status': 'pending',
-    'lastSubmission': '2024-08-26',
-    'title': 'Desenvolvimento de um Sistema de Recomendação Baseado em Machine Learning para E-commerce',
-    'submissionDeadline': '10/10/2024'
-  },
-  {
-    'id': 3,
-    'type': 'Trabalho de Conclusão',
-    'student': {
-      'id': 3, 'name': 'Carlos Silva', 'registration': '67890', 'photo': 'https://www.designi.com.br/images/preview/12161380.jpg'
-    },
-    'grades': [10, 9.5],
-    'professor': {
-      'id': 3, 'name': 'Dr. Maria', 'type': 'Advisor', 'registration': '54321', 'photo': 'https://www.designi.com.br/images/preview/12161381.jpg', 'students': []
-    },
-    'status': 'completed',
-    'lastSubmission': '2024-09-15',
-    'title': 'Desenvolvimento de um Sistema de Recomendação Personalizado para E-commerce',
-    'submissionDeadline': '10/10/2024'
-  }
-];
+import Api from "../../services/api";
 
 const Dashboard = ({ role }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -58,7 +11,18 @@ const Dashboard = ({ role }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileError, setFileError] = useState(''); 
   const storedUserRole = localStorage.getItem('userRole');
-  const firstProfessor = documents.length > 0 ? documents[0].professor : null;
+
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    Api.get('/projeto/todos')
+      .then((data) => {
+        setDocuments(data.data);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar projetos:', error);
+      });
+  }, []); 
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => {
@@ -69,8 +33,26 @@ const Dashboard = ({ role }) => {
 
   const handleSubmit = () => {
     if (selectedFile && selectedFile.type === 'application/pdf') {
-      console.log("Submitting proposal with title:", title, "description:", description, "and file:", selectedFile.name);
-      setOpenDialog(false);
+      const formData = new FormData();
+      
+      formData.append('id_aluno', 3);
+      formData.append('id_orientador', 6);
+      formData.append('nome', title); 
+      formData.append('descricao', description);
+      formData.append('arquivo', selectedFile);
+  
+      Api.post('/projeto/criar', formData)
+        .then(response => {
+          console.log("Proposta submetida com sucesso:", response.data);
+          setOpenDialog(false);
+          setTitle('');
+          setDescription('');
+          setSelectedFile(null);
+        })
+        .catch(error => {
+          console.error("Erro ao submeter proposta:", error);
+          setFileError('Erro ao submeter a proposta. Por favor, tente novamente.');
+        });
     } else {
       setFileError('Por favor, insira um arquivo PDF válido.');
     }
@@ -92,12 +74,12 @@ const Dashboard = ({ role }) => {
       <div className="header-container">
         <h2>Últimas atualizações</h2>
         <div className="advisor-container">
-          {firstProfessor && storedUserRole === "aluno" && (
+          {/* {firstProfessor && storedUserRole === "aluno" && (
             <>
               <img src={firstProfessor.photo} alt={firstProfessor.name} className="person-photo" />
               <span>{firstProfessor.name}</span>
             </>
-          )}
+          )} */}
         </div>
       </div>
       <div className="divider"></div>
