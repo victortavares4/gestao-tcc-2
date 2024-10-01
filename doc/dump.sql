@@ -116,3 +116,11 @@ CREATE TABLE comentario (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id),
     FOREIGN KEY (id_projeto) REFERENCES projeto(id_projeto)
 );
+
+CREATE TABLE aluno_orientador (
+    id_aluno_orientador INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno INT NOT NULL,
+    id_orientador INT NOT NULL,
+    FOREIGN KEY (id_aluno) REFERENCES usuario(id),
+    FOREIGN KEY (id_orientador) REFERENCES usuario(id)
+);
