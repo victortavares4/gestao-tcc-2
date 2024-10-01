@@ -10,6 +10,7 @@ import br.com.gestaotcc.gestaotcc.utils.Mapper;
 import br.com.gestaotcc.gestaotcc.utils.Token;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,34 +29,33 @@ public class UsuarioServicoEjb {
         }
     }
 
-    public LoginRetornoFrontDto authenticate(LoginDto loginDto) {
-        try {
-            UsuarioDaoJpa dao = new UsuarioDaoJpa();
-            UsuarioConversorFactory usuarioFactory = new UsuarioConversorFactory();
-            Mapper map = new Mapper();
-            
-            LoginRetornoFrontDto retorno =  map.
-                    comFunction(usuarioFactory.criarConversorDtoUsuarrioAuthenticate(),
-                            dao.authenticate(loginDto));
+     public LoginRetornoFrontDto authenticate(LoginDto loginDto) {
+    try {
+        UsuarioDaoJpa dao = new UsuarioDaoJpa();
+        Object[] retorno = dao.authenticate(loginDto);
 
-            Token t = new Token();
-            String token = t.generateToken(retorno.getLogin());
-            t.storeToken(retorno.getId(), token);
+        Token t = new Token();
+        String token = t.generateToken(retorno[1].toString());
+        t.storeToken((int) retorno[0], token);
 
-            retorno.setToken(token);
+        // Map Object[] to LoginRetornoFrontDto
+        Function<Object[], LoginRetornoFrontDto> converter = UsuarioConversorFactory.criarConversorDtoUsuarrioAuthenticate();
+        LoginRetornoFrontDto loginRetorno = converter.apply(retorno);
+        loginRetorno.setToken(token);
 
-            return retorno;
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioServicoEjb.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        return loginRetorno;
+    } catch (SQLException ex) {
+        Logger.getLogger(UsuarioServicoEjb.class.getName()).log(Level.SEVERE, null, ex);
+        throw new RuntimeException("Erro ao autenticar o usuário.", ex);
     }
+}
+
 
     public boolean verificarToken(String token) {
         Token t = new Token();
         return t.isValidToken(t.removeBearerPrefix(token));
     }
-
+    
     public List<UsuarioDtoConsultaFront> findAll() throws SQLException {
         UsuarioDaoJpa dao = new UsuarioDaoJpa();
         UsuarioConversorFactory usuarioFactory = new UsuarioConversorFactory();

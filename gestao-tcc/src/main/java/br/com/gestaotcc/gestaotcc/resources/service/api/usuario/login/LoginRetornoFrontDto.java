@@ -14,11 +14,9 @@ import lombok.Data;
 @Data
 @Builder
 public class LoginRetornoFrontDto {
-    private int id;
-    private String login;
-    private String nome;
-    private String tipoUsuario;
-    private int idOrientador;
-    private String nomeOrientador;
-    private String Token;
+    private int userID;  
+    private String matricula; 
+    private String nome;    
+    private String userType;  
+    private String token;
 }
