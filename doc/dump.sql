@@ -106,3 +106,25 @@ CREATE TABLE banca_professor_projeto (
     FOREIGN KEY (id_banca_professor) REFERENCES banca_professor(id_banca_professor),
     FOREIGN KEY (id_projeto) REFERENCES projeto(id_projeto)
 );
+
+CREATE TABLE comentario (
+    id_comentario INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT,
+    id_projeto INT,
+    descricao TEXT,
+    data_hora_insercao timestamp,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_projeto) REFERENCES projeto(id_projeto)
+);
+
+CREATE TABLE aluno_orientador (
+    id_aluno_orientador INT AUTO_INCREMENT PRIMARY KEY,
+    id_aluno INT NOT NULL,
+    id_orientador INT NOT NULL,
+    FOREIGN KEY (id_aluno) REFERENCES usuario(id),
+    FOREIGN KEY (id_orientador) REFERENCES usuario(id)
+);
+
+ALTER TABLE documento 
+ADD COLUMN status INT,
+ADD CONSTRAINT fk_documento_status FOREIGN KEY (status) REFERENCES status(id_status);
