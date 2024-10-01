@@ -124,3 +124,7 @@ CREATE TABLE aluno_orientador (
     FOREIGN KEY (id_aluno) REFERENCES usuario(id),
     FOREIGN KEY (id_orientador) REFERENCES usuario(id)
 );
+
+ALTER TABLE documento 
+ADD COLUMN status INT,
+ADD CONSTRAINT fk_documento_status FOREIGN KEY (status) REFERENCES status(id_status);
