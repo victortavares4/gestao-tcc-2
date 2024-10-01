@@ -131,16 +131,21 @@ export function CardAtividades({ data }) {
       </div>
       {dialogType === 'avaliar' && (
         <Dialog open={openDialog} onClose={handleCloseDialog} aria-labelledby="avaliar-dialog">
-          <DialogTitle id="avaliar-dialog">Avaliar Proposta</DialogTitle>
+          <DialogTitle id="avaliar-dialog" >AVALIAR TRABALHO DE CONCLUSÃO </DialogTitle>
+        {/* ESSA DEVERÁ SER A NOTA DA BANCA */}
+
           <DialogContent>
-            <p>Você deseja aceitar ou rejeitar a proposta de Trabalho de Conclusão?</p>
-            <TextField
-              label="Nota da Proposta"
-              type="number"
-              value={notaProposta}
-              onChange={(e) => setNotaProposta(e.target.value)}
-              fullWidth
+          <p>Insira a nota dos professores:</p>
+          {professoresData.map((e) => {
+            return <TextField
+            type="number"
+            fullWidth
+              style={{ marginTop: '1rem', marginBottom: '1rem', }}
+              variant="outlined"
+              placeholder={'Insira a nota do(a): ' + e.nome}
+
             />
+          })}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseDialog} className="cancel-button">Cancelar</Button>

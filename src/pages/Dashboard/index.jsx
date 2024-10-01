@@ -97,7 +97,7 @@ const Dashboard = ({ role }) => {
       <div className="first-container">
         {documents.length > 0 ? (
           documents.map((doc) => (
-            <CardAtividades key={doc.id} data={doc} />
+            <CardAtividades  key={doc.id} data={doc} />
           ))
         ) : role === "Aluno" ? (
           <div className="no-documents">

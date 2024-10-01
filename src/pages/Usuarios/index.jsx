@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card, CardContent, TextField, InputAdornment, Avatar, Typography, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useStyles } from './styles';
+import Api from '../../services/api';
 
 const getProfessorImage = (id) => {
   const imageMap = {
@@ -14,23 +15,30 @@ const getProfessorImage = (id) => {
 
 const Usuarios = () => {
   const classes = useStyles();
-
-  const professores = [
-    { id: 1, nome: 'Kurt Molz', tipo: 'Professor' },
-    { id: 2, nome: 'Rejane Frozza', tipo: 'Professor' },
-    { id: 3, nome: 'Rafael Peiter', tipo: 'Professor' }
-  ];
-
+  
   const [searchTerm, setSearchTerm] = useState('');
+  const [users, setUsers] = useState([]); // Inicializando como array vazio
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [confirmedProfessor, setConfirmedProfessor] = useState(null); 
   const [open, setOpen] = useState(false);
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
+    // Requisição para buscar todos os usuários
+    Api.get('/user/findall')
+    .then((response) => {
+      setUsers(response.data);
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error('Erro ao buscar usuários:', error);
+    });
+  
+
+    // Recupera informações do localStorage
     const storedProfessor = localStorage.getItem('professorOrientador');
     const storedUserRole = localStorage.getItem('userRole');
-
+    
     if (storedProfessor) {
       setConfirmedProfessor(JSON.parse(storedProfessor));
     }
@@ -44,25 +52,26 @@ const Usuarios = () => {
     setSelectedProfessor(professor);
     setOpen(true);
   };
-
+  
   const handleCloseDialog = () => {
     setOpen(false);
   };
-
+  
   const handleConfirmSelection = () => {
     setConfirmedProfessor(selectedProfessor);
     localStorage.setItem('professorOrientador', JSON.stringify(selectedProfessor));
     handleCloseDialog();
   };
 
-  const filteredProfessores = userRole === 'roleOrientador' 
-    ? professores 
-    : professores.filter(prof => prof.nome.toLowerCase().includes(searchTerm.toLowerCase()));
+  // Filtra usuários com base no termo de busca e verifica se o tipo é 'Professor'
+  const filteredUsers = userRole === 'Orientador' 
+    ? users 
+    : users.filter(user => user.nome.toLowerCase().includes(searchTerm.toLowerCase()) && user.tipo_descricao === 'Orientador');
 
   return (
     <Container className={classes.container} maxWidth="lg">
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span className={classes.header}>Usuários</span>
+      <div style={{ display: "flex", justifyContent: "space-between", padding:"0px" }}>
+        <h2>Usuários</h2>
         <div className={classes.noProfessorContainer}>
           {confirmedProfessor ? (
             <div className={classes.confirmedProfessor}>
@@ -80,7 +89,7 @@ const Usuarios = () => {
           )}
         </div>
       </div>
-      
+      <div className="divider"></div>
       <TextField
         fullWidth
         variant="outlined"
@@ -98,24 +107,24 @@ const Usuarios = () => {
         }}
       />
 
-      {filteredProfessores.map((prof, index) => (
+      {filteredUsers.map((user, index) => (
         <Card key={index} className={classes.professorCard}>
           <Avatar 
-            src={getProfessorImage(prof.id)} 
+            src={getProfessorImage(user.id)} 
             className={classes.avatar} 
           />
           <CardContent className={classes.professorInfo}>
-            <span className={classes.professorName}>{prof.nome}</span>
-            <Typography className={classes.professorType}>{prof.tipo}</Typography>
+            <span className={classes.professorName}>{user.nome}</span>
+            <Typography className={classes.professorType}>{user.tipo_descricao}</Typography>
           </CardContent>
-          {confirmedProfessor && confirmedProfessor.id === prof.id ? (
+          {confirmedProfessor && confirmedProfessor.id === user.id ? (
             <Button variant="contained" className={classes.confirmButton}>
               Orientador Confirmado
             </Button>
           ) : confirmedProfessor ? (
             null
           ) : (
-            <Button variant="contained" className={classes.actionButton} onClick={() => handleOpenDialog(prof)}>
+            <Button variant="contained" className={classes.actionButton} onClick={() => handleOpenDialog(user)}>
               Solicitar Orientação
             </Button>
           )}
