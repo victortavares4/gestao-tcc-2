@@ -14,7 +14,7 @@ const Authorized = ({ children }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setUserObject(typeof user === "string" ? JSON.parse(user) : user);
+        setUserObject(user);
     }, [user]);
 
     return (

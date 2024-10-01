@@ -20,14 +20,18 @@ export const AuthProvider = ({ children }) => {
     const signIn = async ({ login, senha }) => {
         try {
             const log = {
-                login: login,
+                matricula: login,
                 senha: senha,
             }
 
-            const result = await api.post('/user/login', log);
-
+            const result = await api.post('/user/login', log, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log(result.data);
             const { accessToken, user } = result.data.token;
-            setSignInDataOnLocalStorage(result, false);
+            setSignInDataOnLocalStorage(result);
             localStorage.setItem('@Tcc:userName', login);
             setData({ token: accessToken, user });
             return result;
@@ -52,11 +56,11 @@ export const AuthProvider = ({ children }) => {
     };
 
     const setSignInDataOnLocalStorage = (result) => {
-        if (result.data.response) {
+        if (result.data) {
             const token = result.data.token;
-            const user = result.data.response.user;
-            const userRoles = result.data.response.userRoles;
-            const userID = result.data.response.userID;
+            const user = result.data.nome;
+            const userRoles = result.data.userType;
+            const userID = result.data.userID;
 
             sessionStorage.clear();
             localStorage.removeItem('token');
