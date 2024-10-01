@@ -1,11 +1,12 @@
 import React, { createContext, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api, { exceptionNotificationAPI } from '../services/api';
+import { success_message } from '../components/Toast';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [data, setData] = useState(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -32,8 +33,10 @@ export const AuthProvider = ({ children }) => {
             console.log(result.data);
             const { accessToken, user } = result.data.token;
             setSignInDataOnLocalStorage(result);
-            localStorage.setItem('@Tcc:userName', login);
+            localStorage.setItem('@Tcc:userName', login);            
             setData({ token: accessToken, user });
+            success_message("Seja Bem Vindo!");
+            navigate("/");
             return result;
         } catch (error) {
             console.error("Sign-in error:", error);

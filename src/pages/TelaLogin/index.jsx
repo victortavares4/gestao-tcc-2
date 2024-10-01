@@ -41,8 +41,6 @@ const TelaLogin = () => {
         senha: senha,
       });
       if (result.data) {
-        success_message("Seja Bem Vindo!")
-        navigate("/");
       }
     } catch (error) {
       setError('Login falhou. Por favor, verifique suas credenciais.');

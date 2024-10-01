@@ -10,19 +10,30 @@ const Dashboard = ({ role }) => {
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [fileError, setFileError] = useState(''); 
-  const storedUserRole = localStorage.getItem('userRole');
+  const storedUserRole = localStorage.getItem('userRoles');
+  const IDUser = localStorage.getItem('userID');
 
   const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
-    Api.get('/projeto/todos')
-      .then((data) => {
-        setDocuments(data.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar projetos:', error);
-      });
-  }, []); 
+    if (storedUserRole === "Aluno") {
+      Api.get(`/projeto/aluno/${IDUser}`)
+        .then((response) => {
+          setDocuments(response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar projetos:', error);
+        });
+    } else {
+      Api.get('/projeto/todos')
+        .then((response) => {
+          setDocuments(response.data);
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar projetos:', error);
+        });
+    }
+  }, []);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => {
