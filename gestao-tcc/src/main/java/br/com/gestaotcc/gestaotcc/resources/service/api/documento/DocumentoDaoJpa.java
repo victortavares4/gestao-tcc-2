@@ -14,7 +14,7 @@ public class DocumentoDaoJpa {
     }
 
     public void atualizarNotaDocumento(int idDocumento, double notaProposta) throws SQLException {
-        String sql = "UPDATE documento SET notaProposta = ? WHERE id_documento = ?";
+        String sql = "UPDATE documento SET nota_proposta = ? WHERE id_documento = ?";
 
         try (Connection connection = connectionDB.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

@@ -27,11 +27,14 @@ public class ProjetoDto {
     private Date data_fim;
     private Integer tipo_documento;
     private String status;
+    private String alunoImagem;
+    private String orientadorImagem;
+    private double notaProposta;
 
     public ProjetoDto() {
     }
 
-    public ProjetoDto(Integer id_projeto, Integer id_aluno, Integer id_orientador, Integer id_documento, String alunoNome, String orientadorNome, String nome, String descricao, Date data_inicio, Date data_fim, Integer tipo_documento, String status) {
+    public ProjetoDto(Integer id_projeto, Integer id_aluno, Integer id_orientador, Integer id_documento, String alunoNome, String orientadorNome, String nome, String descricao, Date data_inicio, Date data_fim, Integer tipo_documento, String status, String alunoImagem, String orientadorImagem, double notaProposta) {
         this.id_projeto = id_projeto;
         this.id_aluno = id_aluno;
         this.id_orientador = id_orientador;
@@ -44,6 +47,32 @@ public class ProjetoDto {
         this.data_fim = data_fim;
         this.tipo_documento = tipo_documento;
         this.status = status;
+        this.alunoImagem = alunoImagem;
+        this.orientadorImagem = orientadorImagem;
+        this.notaProposta = notaProposta;
+    }
+    public double getNotaProposta() {
+        return notaProposta;
+    }
+
+    public void setNotaProposta(double notaProposta) {
+        this.notaProposta = notaProposta;
+    }
+
+    public String getAlunoImagem() {
+        return alunoImagem;
+    }
+
+    public void setAlunoImagem(String alunoImagem) {
+        this.alunoImagem = alunoImagem;
+    }
+
+    public String getOrientadorImagem() {
+        return orientadorImagem;
+    }
+
+    public void setOrientadorImagem(String orientadorImagem) {
+        this.orientadorImagem = orientadorImagem;
     }
 
     public Integer getId_projeto() {
@@ -125,7 +154,7 @@ public class ProjetoDto {
     public void setOrientadorNome(String orientadorNome) {
         this.orientadorNome = orientadorNome;
     }
-    
+
     public Integer getTipo_documento() {
         return tipo_documento;
     }

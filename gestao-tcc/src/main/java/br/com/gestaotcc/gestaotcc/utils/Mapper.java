@@ -16,12 +16,12 @@ public class Mapper {
     
     public <T, R> List<R> comFunction(Function<T, R> function, List<T> sourceList) {
         return sourceList.stream()
-                .map(function) // Aplica a função fornecida
+                .map(function)
                 .collect(Collectors.toList()); // Coleta os resultados em uma nova lista
     }
     
     public <R> R comFunction(Function<Object[], R> function, Object[] source) {
-        return function.apply(source); // Aplica a função diretamente ao Object[]
+        return function.apply(source);
     }
     
 

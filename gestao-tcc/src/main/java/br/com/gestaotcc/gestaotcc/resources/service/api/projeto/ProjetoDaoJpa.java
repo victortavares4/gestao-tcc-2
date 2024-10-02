@@ -83,9 +83,9 @@ public class ProjetoDaoJpa {
 
         String sql = "SELECT p.id_projeto, p.nome AS projeto_nome, p.descricao, "
                 + "p.id_aluno, p.id_orientador, "
-                + "a.nome AS aluno_nome, o.nome AS orientador_nome, "
-                + "d.id_documento, d.tipo_documento "
-                + "td.prazo_final "
+                + "a.nome AS aluno_nome, a.imagem AS aluno_imagem, "
+                + "o.nome AS orientador_nome, o.imagem AS orientador_imagem, "
+                + "d.id_documento, d.tipo_documento, d.nota_proposta, td.prazo_final "
                 + "FROM projeto p "
                 + "JOIN usuario a ON p.id_aluno = a.id "
                 + "JOIN usuario o ON p.id_orientador = o.id "
@@ -105,18 +105,22 @@ public class ProjetoDaoJpa {
                         .orientadorNome(resultSet.getString("orientador_nome"))
                         .id_documento(resultSet.getInt("id_documento"))
                         .tipo_documento(resultSet.getInt("tipo_documento"))
+                        .alunoImagem(resultSet.getString("aluno_imagem"))
+                        .orientadorImagem(resultSet.getString("orientador_imagem"))
+                        .notaProposta(resultSet.getDouble("nota_proposta")) // Novo campo adicionado
                         .build();
                 projetos.add(projetoDto);
             }
+
         }
 
         return projetos;
     }
-    
+
     public void atribuirNota(Long idProjeto, BigDecimal notaProposta, BigDecimal notaTcc) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
-        
+
         try {
             connection = connectionDB.getConnection();
 
@@ -142,12 +146,11 @@ public class ProjetoDaoJpa {
             }
         }
     }
-    
+
     public void atualizarNotas(Long idProjeto, BigDecimal notaProposta, BigDecimal notaTcc) throws SQLException {
         String sql = "UPDATE projeto SET nota_proposta = ?, nota_tcc = ? WHERE id_projeto = ?";
 
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionDB.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setBigDecimal(1, notaProposta);
             preparedStatement.setBigDecimal(2, notaTcc);
@@ -160,30 +163,43 @@ public class ProjetoDaoJpa {
             }
         }
     }
-    
+
     public List<ProjetoDto> getProjetosByAlunoId(int idAluno) throws SQLException {
-        String sql = "SELECT * FROM projeto WHERE id_aluno = ?";
+         String sql = "SELECT p.id_projeto, p.nome AS projeto_nome, p.descricao, "
+                + "p.id_aluno, p.id_orientador, "
+                + "a.nome AS aluno_nome, a.imagem AS aluno_imagem, "
+                + "o.nome AS orientador_nome, o.imagem AS orientador_imagem, "
+                + "d.id_documento, d.tipo_documento, d.nota_proposta, td.prazo_final "
+                + "FROM projeto p "
+                + "JOIN usuario a ON p.id_aluno = a.id "
+                + "JOIN usuario o ON p.id_orientador = o.id "
+                + "LEFT JOIN documento d ON p.id_projeto = d.id_projeto "
+                + "LEFT JOIN tipo_documento td ON d.tipo_documento = td.id_tipo_documento "
+                + "WHERE p.id_aluno = ?";
 
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+    try (Connection connection = connectionDB.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, idAluno);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        preparedStatement.setInt(1, idAluno);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
-            List<ProjetoDto> projetos = new ArrayList<>();
+        List<ProjetoDto> projetos = new ArrayList<>();
 
-            while (resultSet.next()) {
-                ProjetoDto projeto = new ProjetoDto();
-                projeto.setId_projeto(resultSet.getInt("id_projeto"));
-                projeto.setId_aluno(resultSet.getInt("id_aluno"));
-                projeto.setId_orientador(resultSet.getInt("id_orientador"));
-                projeto.setNome(resultSet.getString("nome"));
-                projeto.setDescricao(resultSet.getString("descricao"));
-                projeto.setData_inicio(resultSet.getDate("data_inicio"));
-                projeto.setData_fim(resultSet.getDate("data_fim"));
+        while (resultSet.next()) {
+            ProjetoDto projeto = new ProjetoDto();
+            projeto.setId_projeto(resultSet.getInt("id_projeto"));
+            projeto.setId_aluno(resultSet.getInt("id_aluno"));
+            projeto.setId_orientador(resultSet.getInt("id_orientador"));
+            projeto.setNome(resultSet.getString("projeto_nome"));
+            projeto.setDescricao(resultSet.getString("descricao"));
+            projeto.setAlunoNome(resultSet.getString("aluno_nome"));
+            projeto.setAlunoImagem(resultSet.getString("aluno_imagem"));
+            projeto.setOrientadorNome(resultSet.getString("orientador_nome"));
+            projeto.setOrientadorImagem(resultSet.getString("orientador_imagem"));
+            projeto.setId_documento(resultSet.getInt("id_documento"));
+            projeto.setNotaProposta(resultSet.getFloat("nota_proposta"));
 
-                projetos.add(projeto);
-            }
+            projetos.add(projeto);
+        }
 
             return projetos;
 
@@ -192,12 +208,11 @@ public class ProjetoDaoJpa {
             throw new SQLException("Erro ao consultar projetos do aluno.", e);
         }
     }
-    
+
     public List<Object[]> findAllTipos() throws SQLException {
         String sql = "SELECT id, descricao FROM tipo;";
 
-        try (Connection connection = connectionDB.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = connectionDB.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Object[]> tipos = new ArrayList<>();
@@ -215,6 +230,5 @@ public class ProjetoDaoJpa {
             throw new SQLException("Erro ao consultar os tipos de usuário.", e);
         }
     }
-
 
 }

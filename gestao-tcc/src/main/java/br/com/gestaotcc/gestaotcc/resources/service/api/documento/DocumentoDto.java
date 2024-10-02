@@ -2,8 +2,12 @@ package br.com.gestaotcc.gestaotcc.resources.service.api.documento;
 
 import java.util.Date;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Builder
+@NoArgsConstructor  
+@AllArgsConstructor 
 public class DocumentoDto {
 
     private Integer id_documento;
@@ -32,17 +36,17 @@ public class DocumentoDto {
     public Integer getId_projeto() {
         return id_projeto;
     }
-    
+
+    public void setId_projeto(Integer id_projeto) {
+        this.id_projeto = id_projeto;
+    }
+
     public Double getNotaProposta() {
         return notaProposta;
     }
 
     public void setNotaProposta(Double notaProposta) {
         this.notaProposta = notaProposta;
-    }
-
-    public void setId_projeto(Integer id_projeto) {
-        this.id_projeto = id_projeto;
     }
 
     public Date getData_envio() {
