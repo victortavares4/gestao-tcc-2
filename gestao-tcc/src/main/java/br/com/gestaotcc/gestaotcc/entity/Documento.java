@@ -44,9 +44,6 @@ public class Documento implements Serializable {
     @Column(name = "data_envio")
     @Temporal(TemporalType.DATE)
     private Date dataEnvio;
-    @Column(name = "prazo_final")
-    @Temporal(TemporalType.DATE)
-    private Date prazoFinal;
     @JoinColumn(name = "id_projeto", referencedColumnName = "id_projeto")
     @ManyToOne
     private Projeto idProjeto;
@@ -80,14 +77,6 @@ public class Documento implements Serializable {
 
     public void setDataEnvio(Date dataEnvio) {
         this.dataEnvio = dataEnvio;
-    }
-
-    public Date getPrazoFinal() {
-        return prazoFinal;
-    }
-
-    public void setPrazoFinal(Date prazoFinal) {
-        this.prazoFinal = prazoFinal;
     }
 
     public Projeto getIdProjeto() {
