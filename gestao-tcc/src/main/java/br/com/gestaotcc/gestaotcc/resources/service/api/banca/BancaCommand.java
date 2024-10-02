@@ -4,6 +4,7 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
+import java.util.ArrayList;
 import lombok.Data;
 
 /**
@@ -13,5 +14,6 @@ import lombok.Data;
 @Data
 public class BancaCommand {
     private Integer id_coordenador;
-    private Integer id_professor;
+    private ArrayList<Integer> id_professor;
+    private Integer id_projeto;
 }
