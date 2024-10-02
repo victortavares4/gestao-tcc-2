@@ -180,7 +180,6 @@ public class ProjetoDaoJpa {
                 projeto.setDescricao(resultSet.getString("descricao"));
                 projeto.setData_inicio(resultSet.getDate("data_inicio"));
                 projeto.setData_fim(resultSet.getDate("data_fim"));
-                // Adicione outros campos conforme necessário
 
                 projetos.add(projeto);
             }
@@ -192,5 +191,29 @@ public class ProjetoDaoJpa {
             throw new SQLException("Erro ao consultar projetos do aluno.", e);
         }
     }
+    
+    public List<Object[]> findAllTipos() throws SQLException {
+        String sql = "SELECT id, descricao FROM tipo;";
+
+        try (Connection connection = connectionDB.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Object[]> tipos = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Object[] tipo = new Object[2];
+                tipo[0] = resultSet.getInt("id");
+                tipo[1] = resultSet.getString("descricao");
+                tipos.add(tipo);
+            }
+
+            return tipos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao consultar os tipos de usuário.", e);
+        }
+    }
+
 
 }

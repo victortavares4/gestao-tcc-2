@@ -16,13 +16,13 @@ import lombok.Builder;
 public class UsuarioConversorFactory {
 
     public static Function<Object[], UsuarioDtoConsultaFront> criarConversorDtoUsuarrio() {
-
-        return (source) -> UsuarioDtoConsultaFront.builder()
-                .tipo_descricao((String) source[0])
-                .matricula((String) source[1])
-                .nome((String) source[2])
-                .build();
-    }
+    return (source) -> UsuarioDtoConsultaFront.builder()
+            .tipo_descricao((String) source[0])
+            .matricula((String) source[1])
+            .nome((String) source[2])
+            .imagem((String) source[3])
+            .build();
+}
 
     public static Function<Object[], LoginRetornoFrontDto> criarConversorDtoUsuarrioAuthenticate() {
     return (source) -> LoginRetornoFrontDto.builder()

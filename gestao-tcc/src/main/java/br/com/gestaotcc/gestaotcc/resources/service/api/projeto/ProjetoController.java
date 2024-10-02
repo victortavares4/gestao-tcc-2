@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -30,6 +31,12 @@ import javax.ws.rs.core.Response;
  */
 @Path("/projeto")
 public class ProjetoController {
+
+    private ProjetoServicoEjb tipoProject;
+
+    public ProjetoController() {
+        this.tipoProject = new ProjetoServicoEjb();
+    }
 
     @POST
     @Path("/criar")
@@ -97,7 +104,6 @@ public class ProjetoController {
             }
         }
 
-        // Salvar o arquivo
         try (OutputStream out = new FileOutputStream(file)) {
             byte[] bytes = new byte[1024];
             int read;
@@ -121,7 +127,7 @@ public class ProjetoController {
                     .entity(new StandardResponse(e.getMessage())).build();
         }
     }
-    
+
     @GET
     @Path("/aluno/{idAluno}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -135,8 +141,25 @@ public class ProjetoController {
                     .entity(new StandardResponse(e.getMessage())).build();
         }
     }
-    
-    
+
+    @GET
+    @Path("/findallTiposUser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTipos() {
+        try {
+            List<TipoDto> tipos = tipoProject.findAllTipos();
+            return Response.ok(tipos).build();
+        } catch (SQLException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(new StandardResponse("Erro ao recuperar os tipos de usuário: " + e.getMessage()))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new StandardResponse("Erro inesperado: " + e.getMessage()))
+                    .build();
+        }
+    }
+
     //@POST
     //@Path("/comentario")
     //@Consumes(MediaType.APPLICATION_JSON)
@@ -151,17 +174,8 @@ public class ProjetoController {
     //                .entity(new StandardResponse(e.getMessage())).build();
     //    }
     //}
-    
-
-    
-    
-    
-    
     //comentario 
     //reunião
-    
     // apresentação tcc 
-    
-    
     // documento
 }

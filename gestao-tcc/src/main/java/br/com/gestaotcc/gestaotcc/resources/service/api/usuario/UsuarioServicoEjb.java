@@ -28,8 +28,12 @@ public class UsuarioServicoEjb {
 
     public void create(UsuarioDto usuarioDto) throws Exception {
         try {
-            UsuarioDaoJpa dao = new UsuarioDaoJpa();
-            dao.create(usuarioDto);
+            if (usuarioDto.getImagem() != null && usuarioDto.getImagem().startsWith("data:image")) {
+                String base64Image = usuarioDto.getImagem().substring(usuarioDto.getImagem().indexOf(",") + 1);
+                usuarioDto.setImagem(base64Image);
+            }
+            
+            usuarioDao.create(usuarioDto);
         } catch (Exception e) {
             throw e;
         }

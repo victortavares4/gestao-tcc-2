@@ -71,7 +71,6 @@ public class UsuarioController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response vincularAlunoOrientador(VinculoAlunoOrientadorDto vinculoDto) {
         try {
-            // Validar se o DTO não é nulo e contém os campos necessários
             if (vinculoDto == null || vinculoDto.getIdAluno() == 0 || vinculoDto.getMatriculaOrientador() == null || vinculoDto.getMatriculaOrientador().isEmpty()) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity(new StandardResponse("Dados inválidos para vinculação.")).build();
@@ -107,12 +106,14 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(UsuarioDto usuarioDto) {
-//  Json que devo receber do front
-//    {
-//    "nome": "Nome do Usuário",
-//    "login": "login_do_usuario",
-//    "senha": "senha_secreta"
-//    }
+        // Json que devo receber do front
+        // {
+        // "nome": "Nome do Usuário",
+        // "matricula": "login_do_usuario",
+        // "senha": "senha_secreta",
+        // "tipo": 1,
+        // "imagem": "data:image/png;base64,iVBORw0KGgoAAAANS..."
+        // }
         try {
             UsuarioServicoEjb servico = new UsuarioServicoEjb();
             servico.create(usuarioDto);
