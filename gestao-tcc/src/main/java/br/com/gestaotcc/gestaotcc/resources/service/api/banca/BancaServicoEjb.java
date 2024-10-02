@@ -4,14 +4,15 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Nicolas
  */
 public class BancaServicoEjb {
-
-   
-    public void create(BancaCommand bancaCommand) {
+    public void create(BancaCommand bancaCommand) throws SQLException {
+        BancaDaoJpa dao = new BancaDaoJpa();
+            dao.create(bancaCommand);        
     }
-    
 }

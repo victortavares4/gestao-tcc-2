@@ -5,6 +5,7 @@
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
 import java.util.ArrayList;
+
 import lombok.Data;
 
 /**
