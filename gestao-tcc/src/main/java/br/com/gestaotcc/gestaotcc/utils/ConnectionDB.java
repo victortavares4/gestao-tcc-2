@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class ConnectionDB {
 
-    private final String JDBC_URL = "jdbc:mysql://localhost/" + "tcc";
+    private final String JDBC_URL = "jdbc:mysql://localhost/" + "gestao_tcc";
     private final String JDBC_USER = "root";
     private final String JDBC_PASSWORD = "root";
     

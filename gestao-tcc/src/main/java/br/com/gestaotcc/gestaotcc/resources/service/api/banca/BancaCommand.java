@@ -4,16 +4,17 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
-import java.util.function.Function;
+import java.util.ArrayList;
+
+import lombok.Data;
 
 /**
  *
  * @author Nicolas
  */
-public class BancaConversorFactory {
-    public static Function<Object[], BancaRetonoFrontDto> criarConversorDto() {
-         
-        return (source) -> BancaRetonoFrontDto.builder()
-                .build();
-    }
+@Data
+public class BancaCommand {
+    private Integer id_coordenador;
+    private ArrayList<Integer> id_professor;
+    private Integer id_projeto;
 }
