@@ -33,10 +33,19 @@ export const AuthProvider = ({ children }) => {
             console.log(result.data);
             const { accessToken, user } = result.data.token;
             setSignInDataOnLocalStorage(result);
-            localStorage.setItem('@Tcc:userName', login);            
+            localStorage.setItem('@Tcc:userName', login);
             setData({ token: accessToken, user });
             success_message("Seja Bem Vindo!");
+
+            const response = await api.get(`/user/orientador/${result.data.userID}`);
+
+            if (response.status === 200 && response.data) {
+                const { idOrientador } = response.data; // Correção aqui
+                localStorage.setItem('userOrientadorID', idOrientador);
+            }
+
             navigate("/");
+
             return result;
         } catch (error) {
             console.error("Sign-in error:", error);
@@ -68,6 +77,7 @@ export const AuthProvider = ({ children }) => {
             sessionStorage.clear();
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            localStorage.removeItem('resultFindOrientador');
             localStorage.removeItem('showContrato');
             localStorage.removeItem('userRoles');
             localStorage.removeItem('userName');

@@ -3,17 +3,51 @@ import CardAtividades from "../../components/CardAtividades";
 import './styles.css';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material';
 import Api from "../../services/api";
+import { error_message, success_message } from "../../components/Toast";
 
 const Dashboard = ({ role }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [fileError, setFileError] = useState(''); 
+  const [fileError, setFileError] = useState('');
   const storedUserRole = localStorage.getItem('userRoles');
+  const storedOrientador = localStorage.getItem('userOrientador');
+  const storedOrientadorID = localStorage.getItem('userOrientadorID');
   const IDUser = localStorage.getItem('userID');
 
   const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    const fetchOrientadorId = async () => {
+
+      try {
+        const response = await Api.get(`/user/orientador/${IDUser}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (response.status === 200 && response.data) {
+          const { idOrientador } = response.data.idOrientador;
+          localStorage.setItem('userOrientadorID', idOrientador);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar o orientador:', error);
+        if (error.response) {
+          if (error.response.status === 404) {
+            error_message("Orientador não encontrado para o aluno especificado.");
+          } else {
+            error_message(`Erro: ${error.response.data.message}`);
+          }
+        } else {
+          error_message("Erro ao buscar o orientador.");
+        }
+      }
+    };
+
+    fetchOrientadorId();
+  }, []);
 
   useEffect(() => {
     if (storedUserRole === "Aluno") {
@@ -45,20 +79,21 @@ const Dashboard = ({ role }) => {
   const handleSubmit = () => {
     if (selectedFile && selectedFile.type === 'application/pdf') {
       const formData = new FormData();
-      
-      formData.append('id_aluno', 3);
-      formData.append('id_orientador', 6);
-      formData.append('nome', title); 
+
+      formData.append('id_aluno', IDUser);
+      formData.append('id_orientador', storedOrientadorID);
+      formData.append('nome', title);
       formData.append('descricao', description);
       formData.append('arquivo', selectedFile);
-  
+
       Api.post('/projeto/criar', formData)
         .then(response => {
-          console.log("Proposta submetida com sucesso:", response.data);
+          success_message("Proposta submetida com sucesso:", response.data);
           setOpenDialog(false);
           setTitle('');
           setDescription('');
           setSelectedFile(null);
+          window.location.reload();
         })
         .catch(error => {
           console.error("Erro ao submeter proposta:", error);
@@ -97,21 +132,20 @@ const Dashboard = ({ role }) => {
       <div className="first-container">
         {documents.length > 0 ? (
           documents.map((doc) => (
-            <CardAtividades  key={doc.id} data={doc} />
+            <CardAtividades key={doc.id} data={doc} />
           ))
-        ) : role === "Aluno" ? (
-          <div className="no-documents">
-            <p>Não há documentos vinculados a este usuário.</p>
-            <Button variant="contained" color="primary" onClick={handleOpenDialog}>
-              Submeter Proposta
-            </Button>
-          </div>
+        ) : storedUserRole === "Aluno" ? (
+          storedOrientador != null ? (
+            <div className="no-documents">
+              <p>Não há documentos vinculados.</p>
+              <Button variant="contained" color="primary" onClick={handleOpenDialog}>
+                Submeter Proposta
+              </Button>
+            </div>
+          ) : "Selecione um orientador antes de submeter sua proposta"
         ) : (
           <div className="no-documents">
-            <p>Não há documentos vinculados a este usuário.</p>
-            <Button variant="contained" color="primary" onClick={handleOpenDialog}>
-              Submeter Proposta
-            </Button>
+            <p>Não há documentos registrados.</p>
           </div>
         )}
       </div>
