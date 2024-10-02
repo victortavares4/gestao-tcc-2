@@ -20,7 +20,7 @@ public class ProjetoDaoJpa {
 
     public void create(ProjetoDto projetoDto, DocumentoDto documentoDto) throws SQLException {
         String sqlProjeto = "INSERT INTO projeto (id_aluno, id_orientador, nome, descricao, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?, ?)";
-        String sqlDocumento = "INSERT INTO documento (tipo_documento, id_projeto, data_envio, prazo_final) VALUES (?, ?, ?, ?)";
+        String sqlDocumento = "INSERT INTO documento (tipo_documento, id_projeto, data_envio) VALUES (?, ?, ?)";
 
         Connection connection = null;
         PreparedStatement preparedStatementProjeto = null;
@@ -48,7 +48,6 @@ public class ProjetoDaoJpa {
                 preparedStatementDocumento.setInt(1, documentoDto.getTipo_documento());
                 preparedStatementDocumento.setInt(2, idProjeto);
                 preparedStatementDocumento.setDate(3, new java.sql.Date(documentoDto.getData_envio().getTime()));
-                preparedStatementDocumento.setDate(4, new java.sql.Date(documentoDto.getPrazo_final().getTime()));
                 preparedStatementDocumento.executeUpdate();
             }
 
@@ -86,10 +85,12 @@ public class ProjetoDaoJpa {
                 + "p.id_aluno, p.id_orientador, "
                 + "a.nome AS aluno_nome, o.nome AS orientador_nome, "
                 + "d.id_documento, d.tipo_documento "
+                + "td.prazo_final "
                 + "FROM projeto p "
                 + "JOIN usuario a ON p.id_aluno = a.id "
                 + "JOIN usuario o ON p.id_orientador = o.id "
-                + "LEFT JOIN documento d ON p.id_projeto = d.id_projeto";
+                + "LEFT JOIN documento d ON p.id_projeto = d.id_projeto "
+                + "LEFT JOIN tipo_documento td ON d.tipo_documento = td.id_tipo_documento";
 
         try (Connection connection = connectionDB.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
 
