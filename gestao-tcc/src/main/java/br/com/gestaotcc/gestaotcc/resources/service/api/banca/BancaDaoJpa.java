@@ -10,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -52,5 +55,52 @@ public class BancaDaoJpa {
             }
         }
 
+    }
+
+    List<Object[]> findByIdProjeto(Integer idProjeto) throws Exception {
+        String sql = "SELECT \n"
+                + "    p.id_projeto,\n"
+                + "    p.nome AS nome_projeto,\n"
+                + "    b.id_banca,\n"
+                + "    bp.id_professor,\n"
+                + "    u.nome AS nome_professor\n"
+                + "FROM \n"
+                + "    projeto p\n"
+                + "JOIN \n"
+                + "    banca_professor_projeto bpp ON p.id_projeto = bpp.id_projeto\n"
+                + "JOIN \n"
+                + "    banca_professor bp ON bp.id_banca_professor = bpp.id_banca_professor\n"
+                + "JOIN \n"
+                + "    banca b ON bp.id_banca = b.id_banca\n"
+                + "JOIN \n"
+                + "    usuario u ON bp.id_professor = u.id\n"
+                + "WHERE \n"
+                + "    p.id_projeto = ?";
+
+        try ( Connection connection = connectionDB.getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idProjeto);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Object[]> retorno = new ArrayList<>();
+
+            while (resultSet.next()) {
+
+                Object[] linha = new Object[5];
+                linha[0] = resultSet.getInt("id_projeto");
+                linha[1] = resultSet.getString("nome_projeto");
+                linha[2] = resultSet.getInt("id_banca");
+                linha[3] = resultSet.getInt("id_professor");
+                linha[4] = resultSet.getString("nome_professor");
+
+                retorno.add(linha);
+            }
+
+            return retorno;
+
+        } catch (SQLException e) {
+            throw new Exception(e);
+        }
     }
 }

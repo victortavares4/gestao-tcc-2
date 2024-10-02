@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.gestaotcc.gestaotcc.resources.service.api.reiniao;
+package br.com.gestaotcc.gestaotcc.resources.service.api.arquivo;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +14,13 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class ReuniaoDto {
-    private Integer idReuniao;
-    private Integer idProjeto;
-    private Timestamp dataHora;
-    private String descricao;
+public class ArquivoDto {
+//    id_arquivo INT PRIMARY KEY AUTO_INCREMENT,
+//    arquivo LONGBLOB,
+//    data_envio DATE,
+//    id_documento INT, 
+    
     private Integer idArquivo;
+    private Date dataEnvio;
+    private Integer idDocumento;
 }
