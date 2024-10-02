@@ -4,14 +4,14 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
+import lombok.Data;
+
 /**
  *
  * @author Nicolas
  */
-public class BancaServicoEjb {
-
-   
-    public void create(BancaCommand bancaCommand) {
-    }
-    
+@Data
+public class BancaCommand {
+    private Integer id_coordenador;
+    private Integer id_professor;
 }

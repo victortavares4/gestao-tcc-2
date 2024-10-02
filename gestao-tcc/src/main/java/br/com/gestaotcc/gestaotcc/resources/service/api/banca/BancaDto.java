@@ -5,12 +5,15 @@
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
 import lombok.Builder;
+import lombok.Data;
 
 /**
  *
  * @author Nicolas
  */
+@Data
 @Builder
 public class BancaDto {
-    
+    private Integer id_banca;
+    private Integer id_coordenador;
 }
