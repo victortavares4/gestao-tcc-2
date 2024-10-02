@@ -4,10 +4,15 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
+import br.com.gestaotcc.gestaotcc.resources.service.api.usuario.UsuarioDaoJpa;
+
 /**
  *
  * @author Nicolas
  */
 public class BancaServicoEjb {
-    
+    private void create(BancaCommand bancaCommand) {
+        BancaDaoJpa dao = new BancaDaoJpa();
+            dao.create(bancaCommand);        
+    }
 }

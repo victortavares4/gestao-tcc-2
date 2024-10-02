@@ -12,5 +12,6 @@ import lombok.Builder;
  */
 @Builder
 public class BancaDto {
-    
+    private Integer id_banca;
+    private Integer id_coordenador;
 }
