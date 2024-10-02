@@ -128,3 +128,23 @@ CREATE TABLE aluno_orientador (
 ALTER TABLE documento 
 ADD COLUMN status INT,
 ADD CONSTRAINT fk_documento_status FOREIGN KEY (status) REFERENCES status(id_status);
+
+
+CREATE TABLE criterios (
+    id_criterio INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao_criterio TEXT,
+    peso_maximo DECIMAL(5,2) NOT NULL
+);
+
+
+CREATE TABLE avaliacao (
+    id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
+    id_banca_professor INT NOT NULL,
+    id_projeto INT NOT NULL,
+    id_criterio INT NOT NULL,
+    nota DECIMAL(5,2) NOT NULL,
+    FOREIGN KEY (id_banca_professor) REFERENCES banca_professor(id_banca_professor),
+    FOREIGN KEY (id_projeto) REFERENCES projeto(id_projeto),
+    FOREIGN KEY (id_criterio) REFERENCES criterios(id_criterio)
+);
