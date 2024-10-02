@@ -44,6 +44,50 @@ public class UsuarioController {
     }
 
     @GET
+    @Path("/orientador/{idAluno}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOrientadorByAlunoId(@PathParam("idAluno") int idAluno) {
+        try {
+            UsuarioServicoEjb servico = new UsuarioServicoEjb();
+            Integer idOrientador = servico.getOrientadorIdByAlunoId(idAluno);
+
+            if (idOrientador != null) {
+                Map<String, Integer> response = new HashMap<>();
+                response.put("idOrientador", idOrientador);
+                return Response.ok(response).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(new StandardResponse("Orientador não encontrado para o aluno especificado")).build();
+            }
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new StandardResponse(e.getMessage())).build();
+        }
+    }
+
+    @POST
+    @Path("/vincular")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response vincularAlunoOrientador(VinculoAlunoOrientadorDto vinculoDto) {
+        try {
+            // Validar se o DTO não é nulo e contém os campos necessários
+            if (vinculoDto == null || vinculoDto.getIdAluno() == 0 || vinculoDto.getMatriculaOrientador() == null || vinculoDto.getMatriculaOrientador().isEmpty()) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity(new StandardResponse("Dados inválidos para vinculação.")).build();
+            }
+
+            UsuarioServicoEjb servico = new UsuarioServicoEjb();
+            servico.vincularAlunoOrientador(vinculoDto.getIdAluno(), vinculoDto.getMatriculaOrientador());
+            return Response.status(Response.Status.CREATED)
+                    .entity(new StandardResponse("Aluno vinculado ao orientador com sucesso")).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(new StandardResponse(e.getMessage())).build();
+        }
+    }
+
+    @GET
     @Path("/findall/{tipo}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,18 +123,18 @@ public class UsuarioController {
     }
 
     @POST
-@Path("/login")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public Response login(LoginDto loginDto) {
-    try {
-        UsuarioServicoEjb servico = new UsuarioServicoEjb();
-        LoginRetornoFrontDto loginRetorno = servico.authenticate(loginDto);
-        return Response.ok(loginRetorno).build();
-    } catch (Exception e) {
-        return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse(e.getMessage())).build();
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(LoginDto loginDto) {
+        try {
+            UsuarioServicoEjb servico = new UsuarioServicoEjb();
+            LoginRetornoFrontDto loginRetorno = servico.authenticate(loginDto);
+            return Response.ok(loginRetorno).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(new StandardResponse(e.getMessage())).build();
+        }
     }
-}
 
     @POST
     @Path("/verificar")

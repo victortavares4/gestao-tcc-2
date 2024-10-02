@@ -159,5 +159,38 @@ public class ProjetoDaoJpa {
             }
         }
     }
+    
+    public List<ProjetoDto> getProjetosByAlunoId(int idAluno) throws SQLException {
+        String sql = "SELECT * FROM projeto WHERE id_aluno = ?";
+
+        try (Connection connection = connectionDB.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, idAluno);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<ProjetoDto> projetos = new ArrayList<>();
+
+            while (resultSet.next()) {
+                ProjetoDto projeto = new ProjetoDto();
+                projeto.setId_projeto(resultSet.getInt("id_projeto"));
+                projeto.setId_aluno(resultSet.getInt("id_aluno"));
+                projeto.setId_orientador(resultSet.getInt("id_orientador"));
+                projeto.setNome(resultSet.getString("nome"));
+                projeto.setDescricao(resultSet.getString("descricao"));
+                projeto.setData_inicio(resultSet.getDate("data_inicio"));
+                projeto.setData_fim(resultSet.getDate("data_fim"));
+                // Adicione outros campos conforme necessário
+
+                projetos.add(projeto);
+            }
+
+            return projetos;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao consultar projetos do aluno.", e);
+        }
+    }
 
 }

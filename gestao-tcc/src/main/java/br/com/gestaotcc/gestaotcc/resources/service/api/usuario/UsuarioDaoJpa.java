@@ -135,4 +135,40 @@ public class UsuarioDaoJpa {
             throw new SQLException("Erro ao consultar os dados do usuário.", e);
         }
     }
+    
+    public Integer findOrientadorIdByMatricula(String matricula) throws SQLException {
+        String sql = "SELECT id FROM usuario WHERE matricula = ? AND tipo = (SELECT id FROM tipo WHERE descricao = 'Professor')";
+
+        try (Connection connection = connectionDB.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, matricula);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            } else {
+                // Orientador não encontrado
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Erro ao buscar o orientador pela matrícula.", e);
+        }
+    }
+    
+    public boolean isAluno(int userId) throws SQLException {
+        String sql = "SELECT tipo.descricao FROM usuario JOIN tipo ON usuario.tipo = tipo.id WHERE usuario.id = ?";
+        try (Connection connection = connectionDB.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String tipoDescricao = resultSet.getString("descricao");
+                return "Aluno".equalsIgnoreCase(tipoDescricao);
+            } else {
+                return false;
+            }
+        }
+    }
 }

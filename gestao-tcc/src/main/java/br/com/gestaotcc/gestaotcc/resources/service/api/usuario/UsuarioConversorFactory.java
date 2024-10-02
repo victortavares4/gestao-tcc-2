@@ -25,12 +25,12 @@ public class UsuarioConversorFactory {
     }
 
     public static Function<Object[], LoginRetornoFrontDto> criarConversorDtoUsuarrioAuthenticate() {
-        return (source) -> LoginRetornoFrontDto.builder()
-                .userID((Integer) source[0])
-                .matricula((String) source[1])
-                .nome((String) source[2])
-                .userType((String) source[3])
-                .build();
+    return (source) -> LoginRetornoFrontDto.builder()
+            .userID((Integer) source[0])
+            .matricula((String) source[1])
+            .nome((String) source[2])
+            .userType((String) source[3])
+            .build();
     }
 
 }

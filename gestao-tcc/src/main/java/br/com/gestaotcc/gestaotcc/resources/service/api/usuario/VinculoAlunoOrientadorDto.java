@@ -4,19 +4,14 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.usuario;
 
-import lombok.Builder;
 import lombok.Data;
 
 /**
  *
- * @author Nicolas
+ * @author LarissaJoanaHelfer
  */
 @Data
-@Builder
-public class UsuarioDtoConsultaFront {
-    
-    private String nome;
-    private String matricula;
-    private String tipo_descricao;
-    private int userID; 
+public class VinculoAlunoOrientadorDto {
+    private int idAluno;
+    private String matriculaOrientador;
 }
