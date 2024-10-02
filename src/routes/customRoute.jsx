@@ -6,9 +6,9 @@ import Authorized from '../pages/Layouts';
 const CustomRoute = ({ isPrivate = false, allowedRoles, ...rest }) => {
     const { user, userRoles } = useAuth();
 
-    if (isPrivate && !user) {
-        return <Navigate to="/login" />;
-    }
+    // if (isPrivate && !user) {
+    //     return <Navigate to="/login" />;
+    // }
 
     if (isPrivate && allowedRoles && !allowedRoles.some(role => userRoles?.includes(role))) {
         return <Navigate to="/unauthorized" />;

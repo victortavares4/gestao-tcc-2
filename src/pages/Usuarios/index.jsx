@@ -6,20 +6,11 @@ import { useStyles } from './styles';
 import Api from '../../services/api';
 import { error_message, success_message } from '../../components/Toast';
 
-const getProfessorImage = (id) => {
-  const imageMap = {
-    1: require('../../assets/images/kurt.jpg'),
-    2: require('../../assets/images/rejane.jpg'),
-    3: require('../../assets/images/rafael.png'),
-  };
-  return imageMap[id] || require('../../assets/images/imageUnisc.png');
-};
-
 const Usuarios = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [confirmedProfessor, setConfirmedProfessor] = useState(null);
   const [open, setOpen] = useState(false);
@@ -58,7 +49,6 @@ const Usuarios = () => {
 
   const handleConfirmSelection = async () => {
     const userID = localStorage.getItem('userID');
-    const token = localStorage.getItem('token');
 
     if (!selectedProfessor) {
       error_message("Selecione um orientador antes de inserir sua proposta");
@@ -68,7 +58,7 @@ const Usuarios = () => {
     const vinculoData = {
       idAluno: parseInt(userID, 10),
       matriculaOrientador: selectedProfessor.matricula
-  };
+    };
 
     try {
       const response = await Api.post('/user/vincular', vinculoData, {
@@ -79,27 +69,19 @@ const Usuarios = () => {
 
       if (response.status === 200 || response.status === 201) {
         localStorage.setItem('userOrientador', selectedProfessor.nome);
-
         success_message("Orientador vinculado com sucesso!");
-
         navigate("/");
       } else {
         error_message("Erro ao vincular o orientador. Por favor, tente novamente.");
       }
     } catch (error) {
       console.error('Erro ao vincular o orientador:', error);
-
-      if (error.response && error.response.data && error.response.data.message) {
-        error_message(`Erro: ${error.response.data.message}`);
-      } else {
-        error_message("Erro ao vincular o orientador. Por favor, tente novamente.");
-      }
+      error_message("Erro ao vincular o orientador. Por favor, tente novamente.");
     } finally {
       handleCloseDialog();
     }
   };
 
-  // Filtra usuários com base no termo de busca e verifica se o tipo é 'Professor'
   const filteredUsers = userRole === 'Professor'
     ? users
     : users.filter(user => user.nome.toLowerCase().includes(searchTerm.toLowerCase()) && user.tipo_descricao === 'Professor');
@@ -112,10 +94,10 @@ const Usuarios = () => {
           {confirmedProfessor ? (
             <div className={classes.confirmedProfessor}>
               <Avatar
-                src={getProfessorImage(confirmedProfessor.id)}
+                src={`data:image/png;base64,${confirmedProfessor.imagem}`}
                 className={classes.avatar}
               />
-              <Typography className={classes.confirmedProfessorName}>{confirmedProfessor}</Typography>
+              <Typography className={classes.confirmedProfessorName}>{confirmedProfessor.nome}</Typography>
             </div>
           ) : (
             <div className={classes.noProfessor}>
@@ -146,7 +128,7 @@ const Usuarios = () => {
       {filteredUsers.map((user, index) => (
         <Card key={index} className={classes.professorCard}>
           <Avatar
-            src={getProfessorImage(user.id)}
+            src={`data:image/png;base64,${user.imagem}`} // Use the base64 image string from the backend
             className={classes.avatar}
           />
           <CardContent className={classes.professorInfo}>
@@ -175,7 +157,7 @@ const Usuarios = () => {
           </DialogContentText>
           {selectedProfessor && (
             <div className={classes.selectedProfessor}>
-              <Avatar src={getProfessorImage(selectedProfessor.id)} className={classes.modalAvatar} />
+              <Avatar src={`data:image/png;base64,${selectedProfessor.imagem}`} className={classes.modalAvatar} />
               <Typography className={classes.selectedProfessorName}>{selectedProfessor.nome}</Typography>
             </div>
           )}

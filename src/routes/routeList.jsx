@@ -4,6 +4,7 @@ import TelaLogin from './../pages/TelaLogin/index';
 import Document from '../pages/Documento';
 import Notas from '../pages/Notas';
 import Usuarios from '../pages/Usuarios';
+import RegisterUser from '../pages/RegisterUser';
 
 const ROLE_ADMIN = "RoleAdmin";
 
@@ -20,7 +21,7 @@ const RoutesList = [
         label: "Dashboard",
         showInSidebar: true,
         component: Dashboard,
-        isPrivate: false,
+        isPrivate: true,
         allowedRoles: [ROLE_ADMIN],
         icon: InsertChart,
     },
@@ -29,7 +30,7 @@ const RoutesList = [
         label: "Notas",
         showInSidebar: true,
         component: Notas,
-        isPrivate: false,
+        isPrivate: true,
         allowedRoles: [ROLE_ADMIN],
         icon: ShowChart,
     },
@@ -38,7 +39,7 @@ const RoutesList = [
         label: "Usuários",
         showInSidebar: true,
         component: Usuarios,
-        isPrivate: false,
+        isPrivate: true,
         allowedRoles: [ROLE_ADMIN],
         icon: Group,
     },
@@ -47,11 +48,19 @@ const RoutesList = [
         label: "Documentos",
         showInSidebar: false,
         component: Document,
-        isPrivate: false,
+        isPrivate: true,
         allowedRoles: [ROLE_ADMIN],
         icon: Group,
     },
-    
+    {
+        path: "/novoUser",
+        label: "Novo Usuario",
+        showInSidebar: false,
+        component: RegisterUser,
+        isPrivate: true,
+        allowedRoles: [ROLE_ADMIN],
+        icon: Group,
+    },
 
 ];
 

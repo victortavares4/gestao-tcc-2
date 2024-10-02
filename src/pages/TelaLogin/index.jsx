@@ -51,7 +51,7 @@ const TelaLogin = () => {
   };
 
   const registrarUsuario = () => {
-    navigate('/registro');
+    navigate('/novoUser');
   };
 
   return (
@@ -66,7 +66,7 @@ const TelaLogin = () => {
               <img src={logo} style={{ height: 60 }} />
             </Box>
             <TextField
-              placeholder='E-mail'
+              placeholder='Matricula'
               variant="outlined"
               fullWidth
               InputLabelProps={{
@@ -91,6 +91,15 @@ const TelaLogin = () => {
               {loading ? <CircularProgress size={24} /> : 'Entrar'}
             </Button>
             {error && <Typography color="error" variant="body2">{error}</Typography>}
+            <Button
+              variant="contained"
+              onClick={registrarUsuario}
+              disabled={loading}
+              fullWidth
+              style={{ marginTop: 16, background: "#0562af", height: 20, fontWeight: 800, color: "#fff" }}
+            >
+              {loading ? <CircularProgress size={24} /> : 'Registrar novo Usuário'}
+            </Button>
             <Box className={styles.boxIcon} style={{ marginTop: "3rem" }}>
               <img src={logoUnisc} style={{ height: 40 }} />
             </Box>

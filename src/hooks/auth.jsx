@@ -37,14 +37,14 @@ export const AuthProvider = ({ children }) => {
             setData({ token: accessToken, user });
             success_message("Seja Bem Vindo!");
 
-            const response = await api.get(`/user/orientador/${result.data.userID}`);
+            // const response = await api.get(`/user/orientador/${result.data.userID}`);
 
-            if (response.status === 200 && response.data) {
-                const { idOrientador } = response.data; // Correção aqui
-                localStorage.setItem('userOrientadorID', idOrientador);
-            }
+            // if (response.status === 200 && response.data) {
+            //     const { idOrientador } = response.data;
+            //     localStorage.setItem('userOrientadorID', idOrientador);
+            // }
 
-            navigate("/");
+            navigate('/');
 
             return result;
         } catch (error) {

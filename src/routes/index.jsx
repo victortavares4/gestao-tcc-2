@@ -6,11 +6,12 @@ import TelaLogin from '../pages/TelaLogin';
 import Usuarios from './../pages/Usuarios/index';
 import Document from '../pages/Documento';
 import Notas from '../pages/Notas';
+import RegisterUser from '../pages/RegisterUser';
 
 const AppRoutes = () => (
     <Routes>
         <Route path="/login" element={<TelaLogin />} />
-        
+        <Route path="/novoUser" element={<RegisterUser />} />
         <Route path="/" element={<CustomRoute isPrivate={true}  />}>
             <Route index element={<Dashboard />} />
         </Route>
@@ -23,6 +24,7 @@ const AppRoutes = () => (
         <Route path="/notas" element={<CustomRoute isPrivate={true}  />}>
             <Route index element={<Notas />} />
         </Route>
+        
         
     </Routes>
 );
