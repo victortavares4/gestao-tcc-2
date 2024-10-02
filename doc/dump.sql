@@ -14,6 +14,8 @@ CREATE TABLE usuario (
 );
 
 alter table usuario add column nome text;
+ALTER TABLE usuario
+ADD COLUMN imagem MEDIUMTEXT;
 
 CREATE TABLE user_token (
     id_token INT AUTO_INCREMENT PRIMARY KEY,
