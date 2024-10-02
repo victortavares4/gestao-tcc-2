@@ -4,12 +4,11 @@
  */
 package br.com.gestaotcc.gestaotcc.resources.service.api.banca;
 
+import br.com.gestaotcc.gestaotcc.utils.ConnectionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import br.com.gestaotcc.gestaotcc.utils.ConnectionDB;
-
 
 /**
  *
