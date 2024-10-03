@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Gestao TCC
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Configuração do Banco de Dados
+1. Baixe o MySQL e o [MySQL Workbench](https://dev.mysql.com/downloads/workbench/) Caso preferir pode baixar o [XAMP](https://www.apachefriends.org/pt_br/index.html) para subir o MySQL
+2. Crie um banco de dados MySQL:
+    ```sql
+    CREATE DATABASE tcc;
+3. Utilize o script `docs/dump.sql` para criar as tabelas necessárias:
 
-## Available Scripts
+## Instalação Apache Tomcat
 
-In the project directory, you can run:
+### Passos para Instalação no Windows
 
-### `npm start`
+#### Baixar e Extrair o Tomcat:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Baixe o arquivo ZIP do Tomcat em [Apache Tomcat Downloads](https://tomcat.apache.org/download-90.cgi).
+2. Extraia o arquivo ZIP no local de sua preferencia.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Passos para Instalação no Linux
 
-### `npm test`
+#### Baixar e Extrair o Tomcat:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Baixe o arquivo TAR.GZ do Tomcat em [Apache Tomcat Downloads](https://tomcat.apache.org/download-90.cgi).
+2. Extraia o arquivo TAR.GZ no local de sua preferencia.
 
-### `npm run build`
+## Como Executar o Back-End
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/nicolaslopess/AstroMonitor.git](https://github.com/victortavares4/gestao-tcc-2.git
+2. Baixe o [JDK](https://www.oracle.com/br/java/technologies/downloads/#java17).
+2. Importe o projeto para a sua IDE Java de preferência (NetBeans, IntelliJ, etc.) nesse projeto foi utilizado [NetBeans](https://netbeans.apache.org/front/main/index.html).
+3. Configure a conexão com o banco de dados MySQL no arquivo `ConnectionDB.java`.
+4. Compile o projeto com as dependencias (assim o NetBeans vai baixar todas as dependencias do projeto).
+- Faça os passos a seguir de configuração do Tomcat no NetBeans e execute o projeto.
+- Vai abrir uma paginal Web `http://localhost:8080/` com a escrita `API java Iniciada`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Deploy de Aplicações no Tomcat com NetBeans
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Adicionar o Tomcat ao NetBeans:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Vá para `Services` > `Servers` > `Add Server`.
+- Selecione `Apache Tomcat or TomEE` e configure o caminho do Tomcat e as credenciais de administrador.
 
-### `npm run eject`
+#### Executar Projeto no NetBeans:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Clique com o botão direito no projeto e selecione `Properties`.
+- Configure o servidor Tomcat na aba `Run`.
+- Selecione o Tomcat e clique em `ok`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Como executar Front-End
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Baixe e instale o [Node.js](https://nodejs.org/en/) `v16.4.0`.
+- Caso já tenha o Node.js instalado deve mudar a versão para `v16.4.0` pode ser usado o [nvm](https://github.com/coreybutler/nvm-windows/releases) para mudar a versão.
+- Para mudar a versão utilize esse comando:
+   ```bash
+   nvm install 16.4.0
+   nvm use 16.20.0
+3. Baixe [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Adicionando dependencias do Node.js
 
-## Learn More
+1. Execute o comando abaixo no diretorio do `gestao-tcc-react/` para baixar as dependencias:
+   ```bash
+   npm install --force
+2. Para iniciar o projeto:
+   ```bash
+   npm start
+- Vai abrir uma paginal Web `http://localhost:3000/login`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Bibliotecas usadas no Front-end
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **@material-ui/core**: Usado para componentes UI como `Box`, `Button`, `Typography`, `Table`, e mais. Este pacote fornece os componentes React baseados no design do Material Design.
+- **@material-ui/icons**: Fornece ícones do Material Design que são usados em vários lugares do UI, como botões e menus.
+- **axios**: Utilizado para fazer requisições HTTP para comunicar-se com APIs externas, como a API NASA no projeto.
+- **@react-three/fiber**: Uma biblioteca React renderer para três.js que permite a construção de cenas 3D de maneira declarativa.
+- **@react-three/drei**: Uma coleção de abstrações reutilizáveis e prontas para uso que complementam @react-three/fiber, como `OrbitControls`, `Stars`, e `useTexture`.
+- **lodash**: Uma biblioteca JavaScript moderna que fornece utilitários modulares para melhorar a eficiência do código, como a função `random` para gerar números aleatórios.
 
-### Code Splitting
+## Dependências adicionais
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **react-router-dom**: (Se você estiver usando roteamento) Utilizado para gerenciar as rotas na aplicação React.
+- **react-redux** e **redux**: (Se você estiver usando gerenciamento de estado global) Usados para gerenciar o estado em toda a aplicação de forma mais eficiente.
 
-### Analyzing the Bundle Size
+## Como instalar as dependências
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Para instalar todas as dependências listadas, você pode executar o seguinte comando no terminal na pasta raiz do seu projeto:
 
-### Making a Progressive Web App
+    npm install @material-ui/core @material-ui/icons axios @react-three/fiber @react-three/drei lodash
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
