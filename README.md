@@ -26,7 +26,7 @@
 ## Como Executar o Back-End
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/nicolaslopess/AstroMonitor.git](https://github.com/victortavares4/gestao-tcc-2.git
+   git clone https://github.com/victortavares4/gestao-tcc-2.git
 2. Baixe o [JDK](https://www.oracle.com/br/java/technologies/downloads/#java17).
 2. Importe o projeto para a sua IDE Java de preferência (NetBeans, IntelliJ, etc.) nesse projeto foi utilizado [NetBeans](https://netbeans.apache.org/front/main/index.html).
 3. Configure a conexão com o banco de dados MySQL no arquivo `ConnectionDB.java`.
